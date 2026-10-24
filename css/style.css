@@ -1,7 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --wood-border: #5c3a21;
+}
+
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
-  background-color: #faf9f6;
-  color: #222;
+  font-family: 'Inter', sans-serif;
+}
+
+.handwritten {
+  font-family: 'Caveat', cursive;
+}
+
+.cork-frame {
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 10px #4a2810,
+    inset 0 0 0 14px #2e1708,
+    inset 0 0 25px rgba(0, 0, 0, 0.85);
+  border: 14px solid #784824;
+  border-image: linear-gradient(135deg, #8a532b, #4a270f, #945b30, #542f14) 14;
+}
+
+.cork-surface {
+  background-color: #ba8c59;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.25) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='corkNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.42  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 0.65 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23corkNoise)' opacity='0.75'/%3E%3C/svg%3E");
+  background-size: auto, 180px 180px;
+}
+
+.pushpin {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.7);
+  z-index: 20;
+}
+.pushpin::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+}
+.pin-red { background: radial-gradient(circle at 35% 35%, #ef4444, #991b1b); }
+.pin-blue { background: radial-gradient(circle at 35% 35%, #3b82f6, #1d4ed8); }
+.pin-gold { background: radial-gradient(circle at 35% 35%, #eab308, #854d0e); }
+.pin-green { background: radial-gradient(circle at 35% 35%, #22c55e, #15803d); }
+
+.washi-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 80px;
+  height: 22px;
+  background: rgba(255, 245, 215, 0.75);
+  backdrop-filter: blur(1px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  border-left: 2px dashed rgba(200, 180, 140, 0.5);
+  border-right: 2px dashed rgba(200, 180, 140, 0.5);
+  z-index: 10;
+}
+.washi-tape-cyan {
+  background: rgba(207, 250, 254, 0.75);
+}
+
+.card-slot {
+  width: 100%;
+  max-width: 250px;
+  height: 250px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.board-card {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  max-width: 250px;
+  min-height: 245px;
+  cursor: pointer;
+  transform-origin: center top;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.board-card:hover {
+  transform: scale(1.06) rotate(0deg) !important;
+  z-index: 30 !important;
+  box-shadow: 0 16px 28px -6px rgba(0, 0, 0, 0.4) !important;
+}
+
+.expand-info-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease, opacity 0.25s ease;
+  opacity: 0;
+}
+.board-card:hover .expand-info-wrapper {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.expand-info-inner {
+  overflow: hidden;
 }
