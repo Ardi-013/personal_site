@@ -1,21 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  function applyCorkTexture() {
-    const corkBoard = document.getElementById('cork-board');
+  const corkBoard = document.getElementById('cork-board');
+
+  function renderCorkTexture(isDark = false) {
     if (!corkBoard) return;
 
     const canvas = document.createElement('canvas');
-    canvas.width = 300;
-    canvas.height = 300;
+    canvas.width = 320;
+    canvas.height = 320;
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = '#ba8753';
-    ctx.fillRect(0, 0, 300, 300);
+    ctx.fillStyle = isDark ? '#7a4e28' : '#ba8852';
+    ctx.fillRect(0, 0, 320, 320);
 
-    const shades = ['#7c461d', '#572e10', '#d89f66', '#9c6434', '#e2b582', '#45220c'];
-    for (let i = 0; i < 5000; i++) {
-      const x = Math.random() * 300;
-      const y = Math.random() * 300;
+    const shades = isDark 
+      ? ['#4a270f', '#361906', '#9c663b', '#613615', '#241004']
+      : ['#7c461d', '#572e10', '#d89f66', '#9c6434', '#e2b582', '#45220c'];
+
+    for (let i = 0; i < 4500; i++) {
+      const x = Math.random() * 320;
+      const y = Math.random() * 320;
       const r = Math.random() * 2 + 0.3;
       ctx.fillStyle = shades[Math.floor(Math.random() * shades.length)];
       ctx.globalAlpha = Math.random() * 0.45 + 0.1;
@@ -24,12 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fill();
     }
 
-    for (let i = 0; i < 100; i++) {
-      const x = Math.random() * 300;
-      const y = Math.random() * 300;
-      const w = Math.random() * 12 + 4;
+    for (let i = 0; i < 80; i++) {
+      const x = Math.random() * 320;
+      const y = Math.random() * 320;
+      const w = Math.random() * 14 + 4;
       const h = Math.random() * 6 + 2;
-      ctx.fillStyle = Math.random() > 0.4 ? '#4a250a' : '#f0c896';
+      ctx.fillStyle = Math.random() > 0.4 ? (isDark ? '#2e1404' : '#4a250a') : (isDark ? '#99663d' : '#f0c896');
       ctx.globalAlpha = Math.random() * 0.35 + 0.15;
       ctx.beginPath();
       ctx.ellipse(x, y, w, h, Math.random() * Math.PI, 0, Math.PI * 2);
@@ -37,14 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const patternUrl = canvas.toDataURL();
-    corkBoard.style.backgroundImage = `
-      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.35) 100%),
-      url(${patternUrl})
-    `;
+    const vignette = isDark
+      ? 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.55) 100%)'
+      : 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.35) 100%)';
+
+    corkBoard.style.backgroundImage = `${vignette}, url(${patternUrl})`;
     corkBoard.style.backgroundRepeat = 'repeat';
   }
 
-  applyCorkTexture();
+  const initiallyDark = document.documentElement.classList.contains('dark');
+  renderCorkTexture(initiallyDark);
 
   const themeToggle = document.getElementById('theme-toggle');
   const themeLabel = document.getElementById('theme-label');
@@ -56,10 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const isDark = document.documentElement.classList.contains('dark');
       if (themeLabel) themeLabel.textContent = isDark ? 'Ночь' : 'День';
       if (themeIcon) themeIcon.textContent = isDark ? '🌙' : '☀️';
+      renderCorkTexture(isDark);
     });
   }
 
-  const corkBoard = document.getElementById('cork-board');
   const stickerLayer = document.getElementById('sticker-layer');
   const stickerBtns = document.querySelectorAll('.sticker-btn');
   const pointerBtn = document.getElementById('pointer-btn');
@@ -79,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!stickerLayer) return;
 
     const randomRot = (Math.random() * 32 - 16).toFixed(1);
-
     const stickerEl = document.createElement('div');
     stickerEl.className = 'placed-sticker text-3xl sm:text-4xl sticker-pop';
     stickerEl.textContent = emoji;
@@ -89,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     stickerEl.title = 'Кликни, чтобы отлепить';
 
     stickerEl.addEventListener('click', (ev) => {
-      ev.stopPropagation(); 
+      ev.stopPropagation();
       stickerEl.classList.add('removing');
       setTimeout(() => {
         stickerEl.remove();
@@ -116,14 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (pointerBtn) {
         pointerBtn.classList.remove('bg-amber-500', 'text-white');
-        pointerBtn.classList.add('bg-white', 'dark:bg-stone-800', 'text-stone-700', 'dark:text-stone-300');
+        pointerBtn.classList.add('bg-white', 'text-stone-700');
       }
 
       if (ghostSticker) ghostSticker.textContent = sticker;
       if (corkBoard) corkBoard.style.cursor = 'crosshair';
     } else {
       if (pointerBtn) {
-        pointerBtn.classList.remove('bg-white', 'dark:bg-stone-800', 'text-stone-700', 'dark:text-stone-300');
+        pointerBtn.classList.remove('bg-white', 'text-stone-700');
         pointerBtn.classList.add('bg-amber-500', 'text-white');
       }
       if (ghostSticker) ghostSticker.classList.add('hidden');

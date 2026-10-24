@@ -21,308 +21,167 @@
   
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-[#f7f5f0] text-stone-800 dark:bg-[#181614] dark:text-stone-100 transition-colors duration-300 min-h-screen flex flex-col overflow-x-hidden">
+<body class="bg-[#24170d] dark:bg-[#0f0b08] text-stone-800 dark:text-stone-100 transition-colors duration-300 min-h-screen p-2 sm:p-5 flex flex-col justify-center items-center select-none overflow-x-hidden">
 
-  <header class="sticky top-0 z-50 backdrop-blur-md bg-stone-100/85 dark:bg-stone-900/85 border-b border-stone-200 dark:border-stone-800 transition-colors">
-    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="#" class="font-bold text-lg tracking-tight flex items-center gap-2 text-stone-800 dark:text-stone-100">
-        <span class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center font-mono text-sm shadow">D</span>
-        <span>Диана</span>
-      </a>
+  <main class="relative w-full max-w-5xl cork-frame rounded-3xl p-4 sm:p-8 md:p-10 shadow-2xl flex flex-col justify-between overflow-hidden min-h-[92vh]" id="cork-board">
+    
+    <div class="brass-corner top-0 left-0"></div>
+    <div class="brass-corner top-0 right-0 rotate-90"></div>
+    <div class="brass-corner bottom-0 left-0 -rotate-90"></div>
+    <div class="brass-corner bottom-0 right-0 rotate-180"></div>
 
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-stone-600 dark:text-stone-300">
-        <a href="#about" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">О себе</a>
-        <a href="#board" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Пробковая доска</a>
-        <a href="#projects" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Проекты</a>
-        <a href="#contacts" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Контакты</a>
-      </nav>
+    <div id="sticker-layer" class="absolute inset-0 pointer-events-none z-30"></div>
 
-      <div class="flex items-center gap-3">
-        <button id="theme-toggle" class="p-2 rounded-xl bg-stone-200/80 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-700 transition flex items-center gap-1.5 text-xs font-semibold">
-          <span id="theme-icon">☀️</span>
-          <span id="theme-label" class="hidden sm:inline">День</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <section id="about" class="pt-12 pb-8 max-w-4xl mx-auto px-4 text-center">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 mb-4 border border-amber-200/60 dark:border-amber-900/60">
-      <span>✨</span>
-      <span>Студентка ДВФУ</span>
-    </div>
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-stone-900 dark:text-white">
-      Привет! Я Диана
-    </h1>
-    <p class="text-base sm:text-lg text-stone-600 dark:text-stone-300 max-w-2xl mx-auto leading-relaxed">
-      Добро пожаловать в мой цифровой уголок. Здесь собраны мои учебные проекты, увлечения и контактная информация.
-    </p>
-  </section>
-
-  <section id="board" class="py-8 max-w-6xl mx-auto px-4 w-full">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
-      <div>
-        <h2 class="text-2xl font-bold tracking-tight flex items-center gap-2 text-stone-900 dark:text-white">
-          <span>📌</span>
-          <span>Пробковая доска</span>
-        </h2>
-        <p class="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">
-          Наведи на карточку, чтобы узнать подробности!
-        </p>
-      </div>
-
-      <div class="bg-white/90 dark:bg-stone-900/90 border border-stone-200 dark:border-stone-700/80 backdrop-blur rounded-2xl p-2 shadow-sm flex flex-wrap items-center gap-2">
-        <button id="pointer-btn" class="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-amber-500 text-white transition flex items-center gap-1">
-          <span>👆</span>
-          <span>Просмотр</span>
-        </button>
-        <div class="h-4 w-px bg-stone-300 dark:bg-stone-700 mx-1"></div>
-        <div class="flex items-center gap-1">
-          <button class="sticker-btn p-1.5 rounded-lg text-lg hover:scale-110 active:scale-95 transition" data-sticker="❤️">❤️</button>
-          <button class="sticker-btn p-1.5 rounded-lg text-lg hover:scale-110 active:scale-95 transition" data-sticker="⭐">⭐</button>
-          <button class="sticker-btn p-1.5 rounded-lg text-lg hover:scale-110 active:scale-95 transition" data-sticker="🌸">🌸</button>
-          <button class="sticker-btn p-1.5 rounded-lg text-lg hover:scale-110 active:scale-95 transition" data-sticker="🐾">🐾</button>
-          <button class="sticker-btn p-1.5 rounded-lg text-lg hover:scale-110 active:scale-95 transition" data-sticker="☕">☕</button>
-          <button class="sticker-btn p-1.5 rounded-lg text-lg hover:scale-110 active:scale-95 transition" data-sticker="✨">✨</button>
-        </div>
-        <div class="h-4 w-px bg-stone-300 dark:bg-stone-700 mx-1"></div>
-        <button id="clear-stickers-btn" class="px-2 py-1 rounded-lg text-xs text-stone-500 hover:text-red-500 dark:text-stone-400 transition">
-          🗑️ Очистить (<span id="sticker-count">0</span>)
-        </button>
-      </div>
-    </div>
-
-    <div class="relative w-full max-w-[1100px] mx-auto min-h-[680px] cork-frame cork-surface rounded-2xl p-6 sm:p-10 select-none overflow-hidden" id="cork-board">
+    <header class="relative z-20 flex flex-wrap items-start justify-between gap-4 mb-8 sm:mb-10">
       
-      <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-overlay z-0" xmlns="http://www.w3.org/2000/svg">
-        <filter id="corkGrain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#corkGrain)" />
-      </svg>
-
-      <div id="sticker-layer" class="absolute inset-0 pointer-events-auto z-10"></div>
-
-      <div class="relative z-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 justify-items-center">
-
-        <div class="card-slot">
-          <div class="board-card bg-stone-50 p-3.5 pb-5 rounded shadow-md border border-stone-200 rotate-[-2deg]">
-            <div class="pushpin pin-red"></div>
-            <div class="h-36 w-full rounded overflow-hidden bg-stone-200 border border-stone-300 relative mb-3">
-              <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-tr from-amber-200 to-rose-200 text-stone-700">
-                <span class="text-4xl mb-1">👩‍💻</span>
-                <span class="text-xs font-mono text-stone-600">Диана</span>
-              </div>
-            </div>
-            <p class="handwritten text-xl text-stone-700 text-center leading-none">привет, это я! ✨</p>
-            <div class="expand-info-wrapper">
-              <div class="expand-info-inner pt-3 text-xs text-stone-600 border-t border-stone-200 mt-2">
-                <p>Люблю создавать интересные вещи и заниматься творчеством.</p>
-                <div class="flex gap-1 mt-2">
-                  <span class="px-1.5 py-0.5 bg-stone-200 rounded text-[10px]">C++</span>
-                  <span class="px-1.5 py-0.5 bg-stone-200 rounded text-[10px]">Python</span>
-                  <span class="px-1.5 py-0.5 bg-stone-200 rounded text-[10px]">Web</span>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="paper-badge bg-white p-3 pt-4 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[-2deg] flex items-center gap-3">
+        <div class="pushpin pin-red"></div>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-200 to-rose-200 flex items-center justify-center text-xl shadow-xs">
+          👩‍💻
         </div>
-
-        <div class="card-slot">
-          <div class="board-card bg-[#fff9b0] p-5 rounded-sm shadow-md border-b-2 border-r-2 border-amber-300/80 rotate-[1.5deg]">
-            <div class="washi-tape"></div>
-            <h3 class="font-bold text-amber-950 text-sm flex items-center gap-1.5 mb-2 mt-1">
-              <span>🎯</span> План на лабу
-            </h3>
-            <ul class="text-xs text-amber-900/90 space-y-1.5">
-              <li>✅ Купить домен 2-го порядка</li>
-              <li>✅ Сделать статический сайт</li>
-              <li>⏳ Настроить HTTPS на GitHub</li>
-              <li>⏳ Сдать лабу преподавателю</li>
-            </ul>
-            <div class="expand-info-wrapper">
-              <div class="expand-info-inner pt-3 text-xs text-amber-950/80 border-t border-amber-300/60 mt-2.5">
-                <p>• GitHub Pages + SSL Let's Encrypt</p>
-                <p>• Чистая статика без лишних зависимостей</p>
-              </div>
-            </div>
-          </div>
+        <div>
+          <div class="font-bold text-sm text-stone-900 leading-tight">Диана</div>
+          <div class="text-[11px] text-stone-600">Студентка ДВФУ</div>
+          <span class="inline-block mt-0.5 px-1.5 py-0.5 bg-amber-100 text-amber-900 font-mono text-[10px] rounded">ardi013.ru</span>
         </div>
-
-        <div class="card-slot">
-          <div class="board-card bg-[#ffd6e0] p-5 rounded-sm shadow-md border-b-2 border-r-2 border-rose-300 rotate-[-1.2deg]">
-            <div class="pushpin pin-gold"></div>
-            <h3 class="font-bold text-rose-950 text-sm flex items-center gap-1.5 mb-2 mt-1">
-              <span>🌸</span> Чем увлекаюсь
-            </h3>
-            <p class="text-xs text-rose-900 leading-relaxed mb-2">
-              Когда не пишу код — пробую создавать пиксель-арт, фотографирую и завариваю вкусный чай.
-            </p>
-            <div class="expand-info-wrapper">
-              <div class="expand-info-inner pt-2.5 text-xs text-rose-950 border-t border-rose-300/60 mt-1">
-                <p class="italic">«Детали имеют решающее значение. Они делают дизайн живым.»</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-slot">
-          <div class="board-card bg-[#dcfce7] p-5 rounded-sm shadow-md border-b-2 border-r-2 border-emerald-300 rotate-[1.8deg]">
-            <div class="pushpin pin-green"></div>
-            <h3 class="font-bold text-emerald-950 text-sm flex items-center gap-1.5 mb-2 mt-1">
-              <span>💻</span> Мой стек
-            </h3>
-            <div class="space-y-1 text-xs text-emerald-900">
-              <p>• <b>HTML5 / CSS3 / JavaScript</b></p>
-              <p>• <b>Python & C++</b></p>
-              <p>• <b>Git & GitHub</b></p>
-            </div>
-            <div class="expand-info-wrapper">
-              <div class="expand-info-inner pt-3 text-xs text-emerald-950 border-t border-emerald-300/60 mt-2.5">
-                <p>Пишу аккуратный код, оформляю коммиты по стандартам и люблю понятную архитектуру.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-slot">
-          <div class="board-card bg-[#e0f2fe] p-5 rounded-sm shadow-md border-b-2 border-r-2 border-sky-300 rotate-[-2deg]">
-            <div class="washi-tape washi-tape-cyan"></div>
-            <h3 class="font-bold text-sky-950 text-sm flex items-center gap-1.5 mb-2 mt-1">
-              <span>💡</span> Заметка
-            </h3>
-            <p class="text-xs text-sky-900 leading-relaxed">
-              «Хороший веб-сайт должен быть быстрым, доступным и не перегруженным.»
-            </p>
-            <div class="expand-info-wrapper">
-              <div class="expand-info-inner pt-3 text-xs text-sky-950 border-t border-sky-300/60 mt-2.5">
-                <p>Статический сайт не требует базы данных и открывается мгновенно.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-slot">
-          <div class="board-card bg-[#f3e8ff] p-5 rounded-sm shadow-md border-b-2 border-r-2 border-purple-300 rotate-[1deg]">
-            <div class="pushpin pin-blue"></div>
-            <h3 class="font-bold text-purple-950 text-sm flex items-center gap-1.5 mb-2 mt-1">
-              <span>🎧</span> Сейчас играет
-            </h3>
-            <div class="text-xs text-purple-900 leading-tight space-y-1">
-              <p class="font-semibold">Lo-Fi & Indie Playlist</p>
-              <p class="text-[11px] text-purple-700">Идеальный фон для написания лабораторных</p>
-            </div>
-            <div class="expand-info-wrapper">
-              <div class="expand-info-inner pt-3 text-xs text-purple-950 border-t border-purple-300/60 mt-2.5">
-                <p class="flex items-center gap-1">
-                  <span>🎵</span> Музыка помогает держать фокус во время коддинга.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
-    </div>
-  </section>
 
-  <section id="projects" class="py-12 max-w-5xl mx-auto px-4 w-full">
-    <div class="mb-8">
-      <h2 class="text-2xl font-bold tracking-tight text-stone-900 dark:text-white flex items-center gap-2">
-        <span>🚀</span> Проекты и работы
-      </h2>
-      <p class="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">Мои учебные лабораторные и пет-проекты</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-6 hover:shadow-md transition">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">HTML5 / CSS3 / JS</span>
-          <span class="text-xs text-stone-400">2026</span>
+      <div class="paper-badge bg-[#fffef0] px-3 py-2.5 rounded-sm shadow-md border-b-2 border-r-2 border-amber-200/90 rotate-[0.8deg] flex items-center gap-2">
+        <div class="washi-tape"></div>
+        <button id="pointer-btn" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-white transition flex items-center gap-1 shadow-xs">
+          <span>👆</span>
+          <span class="hidden sm:inline">Просмотр</span>
+        </button>
+        <div class="h-4 w-px bg-amber-300 mx-0.5"></div>
+        <div class="flex items-center gap-0.5 sm:gap-1">
+          <button class="sticker-btn p-1 text-lg hover:scale-125 active:scale-95 transition" data-sticker="❤️">❤️</button>
+          <button class="sticker-btn p-1 text-lg hover:scale-125 active:scale-95 transition" data-sticker="⭐">⭐</button>
+          <button class="sticker-btn p-1 text-lg hover:scale-125 active:scale-95 transition" data-sticker="🌸">🌸</button>
+          <button class="sticker-btn p-1 text-lg hover:scale-125 active:scale-95 transition" data-sticker="🐾">🐾</button>
+          <button class="sticker-btn p-1 text-lg hover:scale-125 active:scale-95 transition" data-sticker="☕">☕</button>
+          <button class="sticker-btn p-1 text-lg hover:scale-125 active:scale-95 transition" data-sticker="✨">✨</button>
         </div>
-        <h3 class="font-bold text-lg text-stone-900 dark:text-white mb-2">Персональный сайт-портфолио</h3>
-        <p class="text-xs sm:text-sm text-stone-600 dark:text-stone-300 leading-relaxed mb-4">
-          Статический сайт с интерактивной пробковой доской, кастомным доменом 2-го порядка и бесплатным HTTPS на GitHub Pages.
+        <div class="h-4 w-px bg-amber-300 mx-0.5"></div>
+        <button id="clear-stickers-btn" class="p-1 text-xs text-stone-500 hover:text-red-600 transition" title="Очистить доску">
+          🗑️ (<span id="sticker-count">0</span>)
+        </button>
+      </div>
+
+      <div class="paper-badge bg-white px-3 py-2 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[-1.5deg]">
+        <div class="pushpin pin-gold"></div>
+        <button id="theme-toggle" class="flex items-center gap-1.5 text-xs font-semibold text-stone-800 hover:text-amber-600 transition">
+          <span id="theme-icon">☀️</span>
+          <span id="theme-label">День</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-8 justify-items-center mb-10">
+
+      <div class="board-card bg-[#fff9b0] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-amber-300/80 rotate-[1.5deg]">
+        <div class="washi-tape"></div>
+        <h3 class="font-bold text-amber-950 text-sm flex items-center gap-1.5 mb-3 mt-1">
+          <span>🎯</span> План на лабу ТРПО
+        </h3>
+        <ul class="text-xs text-amber-950/90 space-y-2 mb-4 leading-snug">
+          <li class="flex items-center gap-1.5">
+            <span class="text-emerald-700 font-bold">✓</span> Купить домен 2-го порядка
+          </li>
+          <li class="flex items-center gap-1.5">
+            <span class="text-emerald-700 font-bold">✓</span> Сделать статический сайт
+          </li>
+          <li class="flex items-center gap-1.5">
+            <span class="text-amber-700 font-bold">⏳</span> Привязать HTTPS Let's Encrypt
+          </li>
+          <li class="flex items-center gap-1.5">
+            <span class="text-amber-700 font-bold">⏳</span> Защитить проект у преподавателя
+          </li>
+        </ul>
+        <div class="flex items-center justify-between pt-2.5 border-t border-amber-300/70 text-[11px] text-amber-900/80 font-medium">
+          <span class="paper-tag bg-amber-200/80 text-amber-950">GitHub Pages</span>
+          <span class="paper-tag bg-amber-200/80 text-amber-950">Let's Encrypt</span>
+        </div>
+      </div>
+
+      <div class="board-card bg-[#ffd6e0] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-rose-300 rotate-[-1.5deg]">
+        <div class="pushpin pin-gold"></div>
+        <h3 class="font-bold text-rose-950 text-sm flex items-center gap-1.5 mb-2 mt-1">
+          <span>🌸</span> Чем увлекаюсь
+        </h3>
+        <p class="text-xs text-rose-950 leading-relaxed mb-4">
+          Когда не пишу код — пробую создавать пиксель-арт, фотографирую атмосферные вещи и завариваю вкусный чай.
         </p>
-        <div class="flex items-center gap-3">
-          <a href="https://github.com/Ardi-013/personal_site" target="_blank" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
-            Исходный код на GitHub →
-          </a>
+        <div class="pt-2.5 border-t border-rose-300/60 text-xs text-rose-900 italic">
+          «Детали имеют решающее значение. Они делают дизайн живым.»
         </div>
       </div>
 
-      <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-6 hover:shadow-md transition">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300">C++ / Python</span>
-          <span class="text-xs text-stone-400">2026</span>
+      <div class="board-card bg-[#dcfce7] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-emerald-300 rotate-[1.8deg]">
+        <div class="pushpin pin-green"></div>
+        <h3 class="font-bold text-emerald-950 text-sm flex items-center gap-1.5 mb-2.5 mt-1">
+          <span>💻</span> Мой стек технологий
+        </h3>
+        <div class="space-y-1.5 text-xs text-emerald-950 leading-snug mb-3">
+          <p>• <b>HTML5 / CSS3 / JavaScript</b></p>
+          <p>• <b>Python & C++</b></p>
+          <p>• <b>Git & GitHub Pages</b></p>
         </div>
-        <h3 class="font-bold text-lg text-stone-900 dark:text-white mb-2">Лабораторные работы по ТРПО</h3>
-        <p class="text-xs sm:text-sm text-stone-600 dark:text-stone-300 leading-relaxed mb-4">
-          Практические работы по технологии разработки ПО: алгоритмы, протоколы передачи данных и оформление релизов.
+        <div class="pt-2 border-t border-emerald-300/60 text-[11px] text-emerald-900">
+          Аккуратный код, семантика и понятная структура коммитов.
+        </div>
+      </div>
+
+      <div class="board-card bg-[#e0f2fe] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-sky-300 rotate-[-1deg]">
+        <div class="washi-tape washi-tape-cyan"></div>
+        <div class="flex items-center justify-between mb-2 mt-1">
+          <h3 class="font-bold text-sky-950 text-sm">personal_site</h3>
+          <span class="paper-tag bg-sky-200 text-sky-900 font-mono text-[10px]">v1.0</span>
+        </div>
+        <p class="text-xs text-sky-950 leading-relaxed mb-4">
+          Интерактивная доска на Tailwind & JS, собственный домен 2-го уровня и авторазвёртывание.
         </p>
-        <div class="flex items-center gap-3">
-          <a href="https://github.com/Ardi-013/polumecenev" target="_blank" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
-            Репозиторий проекта →
+        <div class="pt-2.5 border-t border-sky-300/60 flex items-center justify-between">
+          <a href="https://github.com/Ardi-013/personal_site" target="_blank" class="paper-tag bg-white hover:bg-sky-50 text-sky-950 font-semibold shadow-xs flex items-center gap-1 transition">
+            <span>Репозиторий</span> <span>→</span>
           </a>
+          <span class="text-[10px] text-sky-800 font-mono">Tailwind</span>
         </div>
       </div>
+
+      <div class="board-card bg-[#f3e8ff] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-purple-300 rotate-[1.2deg]">
+        <div class="pushpin pin-blue"></div>
+        <div class="flex items-center justify-between mb-2 mt-1">
+          <h3 class="font-bold text-purple-950 text-sm">Лабораторные ТРПО</h3>
+          <span class="paper-tag bg-purple-200 text-purple-900 font-mono text-[10px]">ДВФУ</span>
+        </div>
+        <p class="text-xs text-purple-950 leading-relaxed mb-4">
+          Практические работы по технологии разработки ПО: алгоритмы, сборка релизов и контроль версий.
+        </p>
+        <div class="pt-2.5 border-t border-purple-300/60 flex items-center justify-between">
+          <a href="https://github.com/Ardi-013/polumecenev" target="_blank" class="paper-tag bg-white hover:bg-purple-50 text-purple-950 font-semibold shadow-xs flex items-center gap-1 transition">
+            <span>Репозиторий</span> <span>→</span>
+          </a>
+          <span class="text-[10px] text-purple-800 font-mono">C++ / Python</span>
+        </div>
+      </div>
+
     </div>
-  </section>
 
-  <section id="contacts" class="py-12 max-w-4xl mx-auto px-4 w-full">
-    <div class="text-center mb-8">
-      <h2 class="text-2xl font-bold tracking-tight text-stone-900 dark:text-white">Связаться со мной</h2>
-      <p class="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">Открыта к общению и совместным проектам</p>
-    </div>
+    <footer class="relative z-20 pt-4 border-t border-amber-950/20 dark:border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="paper-tag bg-amber-100/90 text-amber-950 font-semibold">📬 Связаться:</span>
+        <a href="https://t.me" target="_blank" class="paper-tag bg-white hover:bg-stone-50 text-stone-800 font-semibold shadow-xs transition">Telegram</a>
+        <a href="https://github.com/Ardi-013" target="_blank" class="paper-tag bg-white hover:bg-stone-50 text-stone-800 font-semibold shadow-xs transition">GitHub</a>
+        <a href="mailto:contact@ardi013.ru" class="paper-tag bg-white hover:bg-stone-50 text-stone-800 font-semibold shadow-xs transition">Email</a>
+      </div>
+      <div class="text-[11px] text-amber-950/80 dark:text-stone-300 font-medium font-mono">
+        © 2026 Диана • ardi013.ru
+      </div>
+    </footer>
+  </main>
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <a href="https://t.me" target="_blank" class="h-20 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-4 flex items-center gap-3.5 hover:border-sky-500 dark:hover:border-sky-500 hover:shadow-md transition group">
-        <div class="w-11 h-11 rounded-xl bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
-          </svg>
-        </div>
-        <div class="text-left overflow-hidden">
-          <div class="text-[11px] text-stone-400 uppercase tracking-wider font-semibold">Написать</div>
-          <div class="text-sm font-bold text-stone-800 dark:text-stone-200 truncate">Telegram</div>
-        </div>
-      </a>
+  <div id="ghost-sticker" class="fixed pointer-events-none text-3xl z-50 select-none hidden" style="transform: translate(0, 0);"></div>
 
-      <a href="https://github.com/Ardi-013" target="_blank" class="h-20 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-4 flex items-center gap-3.5 hover:border-stone-500 dark:hover:border-stone-400 hover:shadow-md transition group">
-        <div class="w-11 h-11 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-          </svg>
-        </div>
-        <div class="text-left overflow-hidden">
-          <div class="text-[11px] text-stone-400 uppercase tracking-wider font-semibold">Профиль</div>
-          <div class="text-sm font-bold text-stone-800 dark:text-stone-200 truncate">GitHub</div>
-        </div>
-      </a>
-
-      <a href="mailto:contact@ardi013.ru" class="h-20 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-4 flex items-center gap-3.5 hover:border-amber-500 dark:hover:border-amber-500 hover:shadow-md transition group">
-        <div class="w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-          </svg>
-        </div>
-        <div class="text-left overflow-hidden">
-          <div class="text-[11px] text-stone-400 uppercase tracking-wider font-semibold">Написать</div>
-          <div class="text-sm font-bold text-stone-800 dark:text-stone-200 truncate">Email</div>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <footer class="mt-auto py-8 border-t border-stone-200 dark:border-stone-800 text-center text-xs text-stone-500 dark:text-stone-400">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p>© 2026 Диана. Лабораторная работа по веб-разработке.</p>
-      <p class="font-mono text-[11px]">HTML5 • CSS3 • JavaScript</p>
-    </div>
-  </footer>
-
-  <div id="ghost-sticker" class="fixed pointer-events-none text-2xl z-50 select-none hidden" style="transform: translate(0, 0);"></div>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=4"></script>
 </body>
 </html>
