@@ -11,21 +11,11 @@ body {
 .cork-frame {
   background-color: #ba8852;
   box-shadow: 
-    0 25px 60px -15px rgba(0, 0, 0, 0.75),
     inset 0 0 0 10px #4a2810,
     inset 0 0 0 14px #2b1506,
     inset 0 0 35px rgba(0, 0, 0, 0.7);
   border: 14px solid #754420;
   border-image: linear-gradient(135deg, #874f28, #45220c, #91572d, #4e2910) 14;
-}
-
-.dark .cork-frame {
-  box-shadow: 
-    0 30px 60px -15px rgba(0, 0, 0, 0.95),
-    inset 0 0 0 10px #2a1608,
-    inset 0 0 0 14px #150a03,
-    inset 0 0 45px rgba(0, 0, 0, 0.9);
-  border-color: #4a270f;
 }
 
 .brass-corner {
@@ -50,17 +40,112 @@ body {
 .board-card {
   position: relative;
   width: 100%;
-  max-width: 310px;
-  min-height: 230px;
+  max-width: 300px;
+  min-height: 190px;
   cursor: pointer;
-  transform-origin: center top;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+  transform-origin: center center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, z-index 0.1s ease;
 }
 
+/* При наведении карточка всплывает на самый передний план */
 .board-card:hover {
   transform: scale(1.04) rotate(0deg) !important;
-  z-index: 25 !important;
-  box-shadow: 0 18px 30px -6px rgba(0, 0, 0, 0.35) !important;
+  z-index: 40 !important;
+  box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Базовый стиль выезжающих дополнительных бумажек */
+.hover-note {
+  position: absolute;
+  width: 180px;
+  min-height: 125px;
+  padding: 14px;
+  border-radius: 2px;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 30;
+}
+
+/* 1. Вылет вправо */
+.note-r {
+  top: 15px;
+  left: calc(100% + 12px);
+  transform: translateX(-15px) rotate(6deg) scale(0.85);
+}
+.board-card:hover .note-r {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0) rotate(5deg) scale(1);
+}
+
+/* 2. Вылет влево */
+.note-l {
+  top: 15px;
+  right: calc(100% + 12px);
+  transform: translateX(15px) rotate(-6deg) scale(0.85);
+}
+.board-card:hover .note-l {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0) rotate(-5deg) scale(1);
+}
+
+/* 3. Вылет вниз */
+.note-b {
+  top: calc(100% + 12px);
+  left: 18px;
+  transform: translateY(-15px) rotate(-4deg) scale(0.85);
+}
+.board-card:hover .note-b {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) rotate(-3deg) scale(1);
+}
+
+/* 4. Вылет вверх */
+.note-t {
+  bottom: calc(100% + 12px);
+  left: 18px;
+  transform: translateY(15px) rotate(4deg) scale(0.85);
+}
+.board-card:hover .note-t {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) rotate(3deg) scale(1);
+}
+
+/* Адаптивность для экранов мобильных телефонов */
+@media (max-width: 768px) {
+  .hover-note {
+    width: 140px;
+    min-height: 100px;
+  }
+  .note-r, .note-t {
+    top: calc(100% + 10px);
+    bottom: auto;
+    left: auto;
+    right: 6px;
+    transform: translateY(-10px) rotate(4deg) scale(0.85);
+  }
+  .board-card:hover .note-r,
+  .board-card:hover .note-t {
+    transform: translateY(0) rotate(3deg) scale(1);
+  }
+  .note-l, .note-b {
+    top: calc(100% + 10px);
+    bottom: auto;
+    right: auto;
+    left: 6px;
+    transform: translateY(-10px) rotate(-4deg) scale(0.85);
+  }
+  .board-card:hover .note-l,
+  .board-card:hover .note-b {
+    transform: translateY(0) rotate(-3deg) scale(1);
+  }
 }
 
 .pushpin {
@@ -94,8 +179,8 @@ body {
   top: -12px;
   left: 50%;
   transform: translateX(-50%) rotate(-1deg);
-  width: 80px;
-  height: 22px;
+  width: 76px;
+  height: 20px;
   background: rgba(255, 245, 215, 0.8);
   backdrop-filter: blur(1px);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
@@ -125,7 +210,7 @@ body {
   pointer-events: auto;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
   transition: transform 0.15s ease, opacity 0.2s ease;
-  z-index: 40;
+  z-index: 5;
 }
 .placed-sticker:hover {
   transform: translate(-50%, -50%) scale(1.35) !important;

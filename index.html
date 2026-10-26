@@ -6,33 +6,21 @@
   <title>Диана | Персональный сайт</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: { light: '#fcfaf8', dark: '#1c1917' }
-          }
-        }
-      }
-    }
-  </script>
-  
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-[#24170d] dark:bg-[#0f0b08] text-stone-800 dark:text-stone-100 transition-colors duration-300 min-h-screen p-2 sm:p-5 flex flex-col justify-center items-center select-none overflow-x-hidden">
+<body class="bg-[#24170d] text-stone-800 m-0 p-0 min-h-screen select-none overflow-x-hidden">
 
-  <main class="relative w-full max-w-5xl cork-frame rounded-3xl p-4 sm:p-8 md:p-10 shadow-2xl flex flex-col justify-between overflow-hidden min-h-[92vh]" id="cork-board">
+  <main class="relative w-full min-h-screen cork-frame p-4 sm:p-8 md:p-12 shadow-2xl flex flex-col justify-between overflow-hidden" id="cork-board">
     
     <div class="brass-corner top-0 left-0"></div>
     <div class="brass-corner top-0 right-0 rotate-90"></div>
     <div class="brass-corner bottom-0 left-0 -rotate-90"></div>
     <div class="brass-corner bottom-0 right-0 rotate-180"></div>
 
-    <div id="sticker-layer" class="absolute inset-0 pointer-events-none z-30"></div>
+    <!-- Слой со стикерами лежит позади карточек -->
+    <div id="sticker-layer" class="absolute inset-0 pointer-events-none z-[5]"></div>
 
-    <header class="relative z-20 flex flex-wrap items-start justify-between gap-4 mb-8 sm:mb-10">
+    <header class="relative z-20 flex flex-wrap items-start justify-between gap-4 mb-6 sm:mb-8">
       
       <div class="paper-badge bg-white p-3 pt-4 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[-2deg] flex items-center gap-3">
         <div class="pushpin pin-red"></div>
@@ -67,114 +55,124 @@
         </button>
       </div>
 
-      <div class="paper-badge bg-white px-3 py-2 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[-1.5deg]">
-        <div class="pushpin pin-gold"></div>
-        <button id="theme-toggle" class="flex items-center gap-1.5 text-xs font-semibold text-stone-800 hover:text-amber-600 transition">
-          <span id="theme-icon">☀️</span>
-          <span id="theme-label">День</span>
-        </button>
-      </div>
     </header>
 
-    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-8 justify-items-center mb-10">
+    <!-- Сетка 6 колонок: 3 карточки сверху и 2 центрированные снизу под промежутками -->
+    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-y-16 sm:gap-y-20 gap-x-8 lg:gap-x-10 justify-items-center items-center my-auto py-4 px-2 sm:px-6">
 
-      <div class="board-card bg-[#fff9b0] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-amber-300/80 rotate-[1.5deg]">
+      <!-- Карточка 1 (Верхний ряд, лево) -->
+      <div class="board-card lg:col-span-2 bg-[#fff9b0] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-amber-300/80 rotate-[-3deg] md:-translate-y-2 md:translate-x-2">
         <div class="washi-tape"></div>
         <h3 class="font-bold text-amber-950 text-sm flex items-center gap-1.5 mb-3 mt-1">
           <span>🎯</span> План на лабу ТРПО
         </h3>
-        <ul class="text-xs text-amber-950/90 space-y-2 mb-4 leading-snug">
-          <li class="flex items-center gap-1.5">
-            <span class="text-emerald-700 font-bold">✓</span> Купить домен 2-го порядка
-          </li>
-          <li class="flex items-center gap-1.5">
-            <span class="text-emerald-700 font-bold">✓</span> Сделать статический сайт
-          </li>
-          <li class="flex items-center gap-1.5">
-            <span class="text-amber-700 font-bold">⏳</span> Привязать HTTPS Let's Encrypt
-          </li>
-          <li class="flex items-center gap-1.5">
-            <span class="text-amber-700 font-bold">⏳</span> Защитить проект у преподавателя
-          </li>
-        </ul>
         <div class="flex items-center justify-between pt-2.5 border-t border-amber-300/70 text-[11px] text-amber-900/80 font-medium">
           <span class="paper-tag bg-amber-200/80 text-amber-950">GitHub Pages</span>
           <span class="paper-tag bg-amber-200/80 text-amber-950">Let's Encrypt</span>
         </div>
+
+        <!-- Бумажка 1 (справа) -->
+        <div class="hover-note note-r bg-[#fffef0] border-amber-200">
+          <div class="washi-tape"></div>
+        </div>
+        <!-- Бумажка 2 (снизу) -->
+        <div class="hover-note note-b bg-[#fffcf0] border-amber-200">
+          <div class="pushpin pin-gold"></div>
+        </div>
       </div>
 
-      <div class="board-card bg-[#ffd6e0] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-rose-300 rotate-[-1.5deg]">
+      <!-- Карточка 2 (Верхний ряд, центр) -->
+      <div class="board-card lg:col-span-2 bg-[#ffd6e0] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-rose-300 rotate-[2.5deg] md:translate-y-3">
         <div class="pushpin pin-gold"></div>
         <h3 class="font-bold text-rose-950 text-sm flex items-center gap-1.5 mb-2 mt-1">
           <span>🌸</span> Чем увлекаюсь
         </h3>
-        <p class="text-xs text-rose-950 leading-relaxed mb-4">
-          Когда не пишу код — пробую создавать пиксель-арт, фотографирую атмосферные вещи и завариваю вкусный чай.
-        </p>
-        <div class="pt-2.5 border-t border-rose-300/60 text-xs text-rose-900 italic">
-          «Детали имеют решающее значение. Они делают дизайн живым.»
+
+        <!-- Бумажка 1 (слева) -->
+        <div class="hover-note note-l bg-[#fff5f7] border-rose-200">
+          <div class="washi-tape"></div>
+        </div>
+        <!-- Бумажка 2 (справа) -->
+        <div class="hover-note note-r bg-[#ffeef2] border-rose-200">
+          <div class="pushpin pin-red"></div>
         </div>
       </div>
 
-      <div class="board-card bg-[#dcfce7] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-emerald-300 rotate-[1.8deg]">
+      <!-- Карточка 3 (Верхний ряд, право) -->
+      <div class="board-card lg:col-span-2 bg-[#dcfce7] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-emerald-300 rotate-[-3.5deg] md:-translate-y-3 md:-translate-x-2">
         <div class="pushpin pin-green"></div>
         <h3 class="font-bold text-emerald-950 text-sm flex items-center gap-1.5 mb-2.5 mt-1">
           <span>💻</span> Мой стек технологий
         </h3>
-        <div class="space-y-1.5 text-xs text-emerald-950 leading-snug mb-3">
-          <p>• <b>HTML5 / CSS3 / JavaScript</b></p>
-          <p>• <b>Python & C++</b></p>
-          <p>• <b>Git & GitHub Pages</b></p>
+
+        <!-- Бумажка 1 (слева) -->
+        <div class="hover-note note-l bg-[#f2fdf6] border-emerald-200">
+          <div class="pushpin pin-green"></div>
         </div>
-        <div class="pt-2 border-t border-emerald-300/60 text-[11px] text-emerald-900">
-          Аккуратный код, семантика и понятная структура коммитов.
+        <!-- Бумажка 2 (снизу) -->
+        <div class="hover-note note-b bg-[#ecfdf5] border-emerald-200">
+          <div class="washi-tape"></div>
         </div>
       </div>
 
-      <div class="board-card bg-[#e0f2fe] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-sky-300 rotate-[-1deg]">
+      <!-- Карточка 4 (Нижний ряд, центр-лево под промежутком 1 и 2) -->
+      <div class="board-card lg:col-start-2 lg:col-span-2 bg-[#e0f2fe] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-sky-300 rotate-[3.5deg] md:translate-y-2">
         <div class="washi-tape washi-tape-cyan"></div>
         <div class="flex items-center justify-between mb-2 mt-1">
           <h3 class="font-bold text-sky-950 text-sm">personal_site</h3>
           <span class="paper-tag bg-sky-200 text-sky-900 font-mono text-[10px]">v1.0</span>
         </div>
-        <p class="text-xs text-sky-950 leading-relaxed mb-4">
-          Интерактивная доска на Tailwind & JS, собственный домен 2-го уровня и авторазвёртывание.
-        </p>
         <div class="pt-2.5 border-t border-sky-300/60 flex items-center justify-between">
           <a href="https://github.com/Ardi-013/personal_site" target="_blank" class="paper-tag bg-white hover:bg-sky-50 text-sky-950 font-semibold shadow-xs flex items-center gap-1 transition">
             <span>Репозиторий</span> <span>→</span>
           </a>
           <span class="text-[10px] text-sky-800 font-mono">Tailwind</span>
         </div>
+
+        <!-- Бумажка 1 (сверху в карман между карточками 1 и 2) -->
+        <div class="hover-note note-t bg-[#f0f9ff] border-sky-200">
+          <div class="pushpin pin-blue"></div>
+        </div>
+        <!-- Бумажка 2 (справа) -->
+        <div class="hover-note note-r bg-[#e0f2fe]/90 border-sky-200">
+          <div class="washi-tape washi-tape-cyan"></div>
+        </div>
       </div>
 
-      <div class="board-card bg-[#f3e8ff] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-purple-300 rotate-[1.2deg]">
+      <!-- Карточка 5 (Нижний ряд, центр-право под промежутком 2 и 3) -->
+      <div class="board-card lg:col-start-4 lg:col-span-2 bg-[#f3e8ff] p-5 rounded-sm shadow-lg border-b-2 border-r-2 border-purple-300 rotate-[-2.5deg] md:-translate-y-1">
         <div class="pushpin pin-blue"></div>
         <div class="flex items-center justify-between mb-2 mt-1">
           <h3 class="font-bold text-purple-950 text-sm">Лабораторные ТРПО</h3>
           <span class="paper-tag bg-purple-200 text-purple-900 font-mono text-[10px]">ДВФУ</span>
         </div>
-        <p class="text-xs text-purple-950 leading-relaxed mb-4">
-          Практические работы по технологии разработки ПО: алгоритмы, сборка релизов и контроль версий.
-        </p>
         <div class="pt-2.5 border-t border-purple-300/60 flex items-center justify-between">
           <a href="https://github.com/Ardi-013/polumecenev" target="_blank" class="paper-tag bg-white hover:bg-purple-50 text-purple-950 font-semibold shadow-xs flex items-center gap-1 transition">
             <span>Репозиторий</span> <span>→</span>
           </a>
           <span class="text-[10px] text-purple-800 font-mono">C++ / Python</span>
         </div>
+
+        <!-- Бумажка 1 (сверху в карман между карточками 2 и 3) -->
+        <div class="hover-note note-t bg-[#faf5ff] border-purple-200">
+          <div class="pushpin pin-gold"></div>
+        </div>
+        <!-- Бумажка 2 (слева) -->
+        <div class="hover-note note-l bg-[#f5f3ff] border-purple-200">
+          <div class="washi-tape"></div>
+        </div>
       </div>
 
     </div>
 
-    <footer class="relative z-20 pt-4 border-t border-amber-950/20 dark:border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
+    <footer class="relative z-20 pt-4 border-t border-amber-950/20 flex flex-wrap items-center justify-between gap-3 text-xs mt-6">
       <div class="flex flex-wrap items-center gap-2">
         <span class="paper-tag bg-amber-100/90 text-amber-950 font-semibold">📬 Связаться:</span>
         <a href="https://t.me" target="_blank" class="paper-tag bg-white hover:bg-stone-50 text-stone-800 font-semibold shadow-xs transition">Telegram</a>
         <a href="https://github.com/Ardi-013" target="_blank" class="paper-tag bg-white hover:bg-stone-50 text-stone-800 font-semibold shadow-xs transition">GitHub</a>
-        <a href="mailto:contact@ardi013.ru" class="paper-tag bg-white hover:bg-stone-50 text-stone-800 font-semibold shadow-xs transition">Email</a>
+        <a href="mailto:contact@ardi013.ru" target="_blank" class="paper-tag bg-white hover:bg-stone-50 text-stone-800 font-semibold shadow-xs transition">Email</a>
       </div>
-      <div class="text-[11px] text-amber-950/80 dark:text-stone-300 font-medium font-mono">
+      <div class="text-[11px] text-amber-950/80 font-medium font-mono">
         © 2026 Диана • ardi013.ru
       </div>
     </footer>
@@ -182,6 +180,6 @@
 
   <div id="ghost-sticker" class="fixed pointer-events-none text-3xl z-50 select-none hidden" style="transform: translate(0, 0);"></div>
 
-  <script src="js/main.js?v=4"></script>
+  <script src="js/main.js?v=6"></script>
 </body>
 </html>
