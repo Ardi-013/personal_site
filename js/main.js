@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const corkBoard = document.getElementById('cork-board');
 
+  // Отрисовываем текстуру пробки один раз — фон статичен
   function renderCorkTexture() {
     if (!corkBoard) return;
 
@@ -39,13 +40,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const patternUrl = canvas.toDataURL();
-    const vignette = 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.35) 100%)';
+    const vignette = 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%)';
 
     corkBoard.style.backgroundImage = `${vignette}, url(${patternUrl})`;
     corkBoard.style.backgroundRepeat = 'repeat';
   }
 
   renderCorkTexture();
+
+  // Выключатель гирлянды (только лампочки)
+  const garlandToggle = document.getElementById('garland-toggle');
+  if (garlandToggle && corkBoard) {
+    garlandToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      corkBoard.classList.toggle('garland-on');
+    });
+  }
+
+  // Копирование корпоративной почты по клику на кнопку в футере
+  const copyEmailBtn = document.getElementById('copy-email-btn');
+  const emailIcon = document.getElementById('email-icon');
+  const emailText = document.getElementById('email-text');
+  const emailCopyHint = document.getElementById('email-copy-hint');
+
+  if (copyEmailBtn && emailText) {
+    let copyTimeout = null;
+
+    copyEmailBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const email = copyEmailBtn.getAttribute('data-email') || 'kozik.dv@dvfu.ru';
+
+      navigator.clipboard.writeText(email).then(() => {
+        if (copyTimeout) clearTimeout(copyTimeout);
+
+        if (emailIcon) emailIcon.textContent = '✅';
+        emailText.textContent = 'Скопировано!';
+        emailText.classList.add('text-emerald-700');
+        if (emailCopyHint) emailCopyHint.classList.add('hidden');
+
+        copyTimeout = setTimeout(() => {
+          if (emailIcon) emailIcon.textContent = '✉️';
+          emailText.textContent = email;
+          emailText.classList.remove('text-emerald-700');
+          if (emailCopyHint) emailCopyHint.classList.remove('hidden');
+        }, 2000);
+      });
+    });
+  }
 
   const stickerLayer = document.getElementById('sticker-layer');
   const stickerBtns = document.querySelectorAll('.sticker-btn');
@@ -119,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   stickerBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      // Останавливаем всплытие клика, чтобы стикер только брался в руку и не ставился на панель
       e.stopPropagation();
       const sticker = btn.getAttribute('data-sticker');
       if (currentSticker === sticker) {
@@ -160,8 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!currentSticker) return;
       if (e.target.classList.contains('placed-sticker')) return;
 
-      // Запрещаем клеить стикеры на карточки, бейджи в шапке и футер
-      if (e.target.closest('.board-card, .paper-badge, footer')) return;
+      // Запрещаем клеить стикеры на карточки, выезжающие бумажки, бейджи в шапке и футер
+      if (e.target.closest('.board-card, .hover-note, .paper-badge, footer')) return;
 
       const rect = corkBoard.getBoundingClientRect();
       const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
