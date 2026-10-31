@@ -37,10 +37,10 @@
     <div id="sticker-layer" class="absolute inset-0 pointer-events-none z-[5]"></div>
 
     <!-- Шапка: чуть опущена (pt-6), чтобы лежать аккуратно под гирляндой -->
-    <header class="relative z-30 grid grid-cols-1 md:grid-cols-3 items-start gap-4 mb-6 sm:mb-10 pt-6">
+    <header class="relative z-30 grid grid-cols-2 md:grid-cols-3 items-center gap-3 sm:gap-4 mb-6 sm:mb-10 pt-4 sm:pt-6">
       
       <!-- 1. Левый край: карточка профиля -->
-      <div class="justify-self-start">
+      <div class="col-span-1 justify-self-start order-1">
         <div class="paper-badge bg-white p-3 pt-4 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[-2deg] flex items-center gap-3">
           <div class="pushpin pin-red"></div>
           <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-200 to-rose-200 flex items-center justify-center text-xl shadow-xs">
@@ -55,7 +55,7 @@
       </div>
 
       <!-- 2. Середина: плашка с наклейками -->
-      <div class="justify-self-center">
+      <div class="col-span-2 md:col-span-1 justify-self-center order-3 md:order-2 w-full flex justify-center">
         <div class="paper-badge bg-[#fffef0] px-3 py-2.5 rounded-sm shadow-md border-b-2 border-r-2 border-amber-200/90 rotate-[0.6deg] flex items-center gap-2">
           <div class="washi-tape"></div>
           <button id="pointer-btn" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-white transition flex items-center gap-1 shadow-xs">
@@ -79,7 +79,7 @@
       </div>
 
       <!-- 3. Правый край: маленькая бумажка с нарисованной лампочкой-выключателем -->
-      <div class="justify-self-end">
+      <div class="col-span-1 justify-self-end order-2 md:order-3">
         <button id="garland-toggle" class="paper-badge bg-[#fffdf5] p-2.5 pt-3.5 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[2.5deg] flex flex-col items-center justify-center cursor-pointer group" title="Включить / выключить гирлянду">
           <div class="pushpin pin-gold"></div>
           <svg class="w-9 h-9 drawn-bulb transition-transform group-hover:scale-110" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +100,7 @@
     </header>
 
     <!-- Основное поле доски с увеличенными карточками и большими бумажками -->
-    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-y-24 lg:gap-y-28 gap-x-10 lg:gap-x-14 justify-items-center items-center my-auto py-8 px-4 sm:px-10">
+    <div id="cards-grid" class="cards-grid relative z-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-y-32 sm:gap-y-28 lg:gap-y-28 gap-x-10 lg:gap-x-14 justify-items-center items-center my-auto py-8 px-4 sm:px-10">
 
       <!-- КАРТОЧКА 1 (Жёлтая, верхний левый угол) -->
       <div class="board-card lg:col-span-2 rotate-[-2.5deg] lg:-translate-x-4 lg:-translate-y-2">
@@ -115,10 +115,10 @@
           </div>
         </div>
 
-        <div class="hover-note note-1-r bg-[#fffef0] border-amber-200">
+        <div class="hover-note note-1-r note-mobile-top bg-[#fffef0] border-amber-200">
           <div class="washi-tape"></div>
         </div>
-        <div class="hover-note note-1-b bg-[#fffdf2] border-amber-300">
+        <div class="hover-note note-1-b note-mobile-bottom bg-[#fffdf2] border-amber-300">
           <div class="pushpin pin-gold"></div>
         </div>
       </div>
@@ -132,10 +132,10 @@
           </h3>
         </div>
 
-        <div class="hover-note note-2-l bg-[#fff5f7] border-rose-200">
+        <div class="hover-note note-2-l note-mobile-top bg-[#fff5f7] border-rose-200">
           <div class="washi-tape"></div>
         </div>
-        <div class="hover-note note-2-r bg-[#ffeef2] border-rose-200">
+        <div class="hover-note note-2-r note-mobile-bottom bg-[#ffeef2] border-rose-200">
           <div class="pushpin pin-red"></div>
         </div>
       </div>
@@ -149,10 +149,10 @@
           </h3>
         </div>
 
-        <div class="hover-note note-3-l bg-[#f2fdf6] border-emerald-200">
+        <div class="hover-note note-3-l note-mobile-top bg-[#f2fdf6] border-emerald-200">
           <div class="pushpin pin-green"></div>
         </div>
-        <div class="hover-note note-3-b bg-[#ecfdf5] border-emerald-200">
+        <div class="hover-note note-3-b note-mobile-bottom bg-[#ecfdf5] border-emerald-200">
           <div class="washi-tape"></div>
         </div>
       </div>
@@ -173,10 +173,10 @@
           </div>
         </div>
 
-        <div class="hover-note note-4-l bg-[#f0f9ff] border-sky-200">
+        <div class="hover-note note-4-l note-mobile-top bg-[#f0f9ff] border-sky-200">
           <div class="washi-tape"></div>
         </div>
-        <div class="hover-note note-4-t bg-[#e6f6fe] border-sky-200">
+        <div class="hover-note note-4-t note-mobile-bottom bg-[#e6f6fe] border-sky-200">
           <div class="washi-tape washi-tape-cyan"></div>
         </div>
       </div>
@@ -197,10 +197,10 @@
           </div>
         </div>
 
-        <div class="hover-note note-5-t bg-[#faf5ff] border-purple-200">
+        <div class="hover-note note-5-t note-mobile-top bg-[#faf5ff] border-purple-200">
           <div class="washi-tape"></div>
         </div>
-        <div class="hover-note note-5-r bg-[#fdf4ff] border-purple-200">
+        <div class="hover-note note-5-r note-mobile-bottom bg-[#fdf4ff] border-purple-200">
           <div class="pushpin pin-gold"></div>
         </div>
       </div>
@@ -208,7 +208,7 @@
     </div>
 
     <!-- Подвал с рабочей ссылкой на Telegram и кнопкой копирования корпоративной почты -->
-    <footer class="relative z-20 pt-4 border-t border-amber-950/20 flex flex-wrap items-center justify-between gap-3 text-xs mt-12">
+    <footer class="relative z-10 pt-4 border-t border-amber-950/20 flex flex-wrap items-center justify-between gap-3 text-xs mt-12">
       <div class="flex flex-wrap items-center gap-2">
         <span class="paper-tag bg-amber-100/90 text-amber-950 font-semibold">📬 Связаться:</span>
         
@@ -237,6 +237,6 @@
 
   <div id="ghost-sticker" class="fixed pointer-events-none text-3xl z-[70] select-none hidden" style="transform: translate(0, 0);"></div>
 
-  <script src="js/main.js?v=9"></script>
+  <script src="js/main.js?v=12"></script>
 </body>
 </html>

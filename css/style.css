@@ -133,13 +133,22 @@ body {
   transition: box-shadow 0.25s ease;
 }
 
-.board-card:hover {
+.board-card:hover,
+.board-card.is-open {
   transform: scale(1.02) rotate(0deg) !important;
-  z-index: 45 !important;
+  z-index: 60 !important;
 }
 
-.board-card:hover .card-surface {
+.board-card:hover .card-surface,
+.board-card.is-open .card-surface {
   box-shadow: 0 22px 38px -8px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Сетка карточек при открытии/наведении поднимается над футером и шапкой */
+.cards-grid:has(.is-open),
+.cards-grid:has(.board-card:hover),
+.cards-grid.has-open-card {
+  z-index: 50 !important;
 }
 
 /* ================= БОЛЬШИЕ ПОБОЧНЫЕ БУМАЖКИ (ПОД ФОТО И ТЕКСТ) ================= */
@@ -158,131 +167,156 @@ body {
   z-index: 10; /* Всегда лежат под главной карточкой (.card-surface) */
 }
 
-.board-card:hover .hover-note {
+.board-card:hover .hover-note,
+.board-card.is-open .hover-note {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* --- Позиции больших бумажек снаружи от главных карточек --- */
+/* ================= ПК ВЕРСИЯ (ВЫДВИЖЕНИЕ ПО СТОРОНАМ) ================= */
+@media (min-width: 1024px) {
+  /* Карточка 1 (Жёлтая): вправо и вниз */
+  .note-1-r {
+    top: -15px;
+    left: calc(100% - 14px);
+    transform: translateX(-35px) rotate(4deg) scale(0.85);
+  }
+  .board-card:hover .note-1-r,
+  .board-card.is-open .note-1-r {
+    transform: translateX(0) rotate(3deg) scale(1);
+  }
 
-/* Карточка 1 (Жёлтая): вправо и вниз */
-.note-1-r {
-  top: -15px;
-  left: calc(100% - 14px);
-  transform: translateX(-35px) rotate(4deg) scale(0.85);
-}
-.board-card:hover .note-1-r {
-  transform: translateX(0) rotate(3deg) scale(1);
+  .note-1-b {
+    top: calc(100% - 14px);
+    left: -20px;
+    transform: translateY(-35px) rotate(-3deg) scale(0.85);
+  }
+  .board-card:hover .note-1-b,
+  .board-card.is-open .note-1-b {
+    transform: translateY(0) rotate(-2deg) scale(1);
+  }
+
+  /* Карточка 2 (Розовая): влево и вправо */
+  .note-2-l {
+    top: 5px;
+    right: calc(100% - 14px);
+    transform: translateX(35px) rotate(-4deg) scale(0.85);
+  }
+  .board-card:hover .note-2-l,
+  .board-card.is-open .note-2-l {
+    transform: translateX(0) rotate(-3deg) scale(1);
+  }
+
+  .note-2-r {
+    top: 20px;
+    left: calc(100% - 14px);
+    transform: translateX(-35px) rotate(4deg) scale(0.85);
+  }
+  .board-card:hover .note-2-r,
+  .board-card.is-open .note-2-r {
+    transform: translateX(0) rotate(3deg) scale(1);
+  }
+
+  /* Карточка 3 (Зелёная): влево и вниз */
+  .note-3-l {
+    top: -15px;
+    right: calc(100% - 14px);
+    transform: translateX(35px) rotate(-3deg) scale(0.85);
+  }
+  .board-card:hover .note-3-l,
+  .board-card.is-open .note-3-l {
+    transform: translateX(0) rotate(-2deg) scale(1);
+  }
+
+  .note-3-b {
+    top: calc(100% - 14px);
+    right: -10px;
+    transform: translateY(-35px) rotate(3deg) scale(0.85);
+  }
+  .board-card:hover .note-3-b,
+  .board-card.is-open .note-3-b {
+    transform: translateY(0) rotate(2deg) scale(1);
+  }
+
+  /* Карточка 4 (Голубая): влево и вверх */
+  .note-4-l {
+    top: 5px;
+    right: calc(100% - 14px);
+    transform: translateX(35px) rotate(-3deg) scale(0.85);
+  }
+  .board-card:hover .note-4-l,
+  .board-card.is-open .note-4-l {
+    transform: translateX(0) rotate(-2.5deg) scale(1);
+  }
+
+  .note-4-t {
+    bottom: calc(100% - 14px);
+    left: 15px;
+    transform: translateY(35px) rotate(3.5deg) scale(0.85);
+  }
+  .board-card:hover .note-4-t,
+  .board-card.is-open .note-4-t {
+    transform: translateY(0) rotate(2.5deg) scale(1);
+  }
+
+  /* Карточка 5 (Фиолетовая): вверх и вправо */
+  .note-5-t {
+    bottom: calc(100% - 14px);
+    left: 15px;
+    transform: translateY(35px) rotate(-3.5deg) scale(0.85);
+  }
+  .board-card:hover .note-5-t,
+  .board-card.is-open .note-5-t {
+    transform: translateY(0) rotate(-2deg) scale(1);
+  }
+
+  .note-5-r {
+    top: 5px;
+    left: calc(100% - 14px);
+    transform: translateX(-35px) rotate(3deg) scale(0.85);
+  }
+  .board-card:hover .note-5-r,
+  .board-card.is-open .note-5-r {
+    transform: translateX(0) rotate(2.5deg) scale(1);
+  }
 }
 
-.note-1-b {
-  top: calc(100% - 14px);
-  left: -20px;
-  transform: translateY(-35px) rotate(-3deg) scale(0.85);
-}
-.board-card:hover .note-1-b {
-  transform: translateY(0) rotate(-2deg) scale(1);
-}
-
-/* Карточка 2 (Розовая): влево и вправо */
-.note-2-l {
-  top: 5px;
-  right: calc(100% - 14px);
-  transform: translateX(35px) rotate(-4deg) scale(0.85);
-}
-.board-card:hover .note-2-l {
-  transform: translateX(0) rotate(-3deg) scale(1);
-}
-
-.note-2-r {
-  top: 20px;
-  left: calc(100% - 14px);
-  transform: translateX(-35px) rotate(4deg) scale(0.85);
-}
-.board-card:hover .note-2-r {
-  transform: translateX(0) rotate(3deg) scale(1);
-}
-
-/* Карточка 3 (Зелёная): влево и вниз */
-.note-3-l {
-  top: -15px;
-  right: calc(100% - 14px);
-  transform: translateX(35px) rotate(-3deg) scale(0.85);
-}
-.board-card:hover .note-3-l {
-  transform: translateX(0) rotate(-2deg) scale(1);
-}
-
-.note-3-b {
-  top: calc(100% - 14px);
-  right: -10px;
-  transform: translateY(-35px) rotate(3deg) scale(0.85);
-}
-.board-card:hover .note-3-b {
-  transform: translateY(0) rotate(2deg) scale(1);
-}
-
-/* Карточка 4 (Голубая): влево и вверх */
-.note-4-l {
-  top: 5px;
-  right: calc(100% - 14px);
-  transform: translateX(35px) rotate(-3deg) scale(0.85);
-}
-.board-card:hover .note-4-l {
-  transform: translateX(0) rotate(-2.5deg) scale(1);
-}
-
-.note-4-t {
-  bottom: calc(100% - 14px);
-  left: 15px;
-  transform: translateY(35px) rotate(3.5deg) scale(0.85);
-}
-.board-card:hover .note-4-t {
-  transform: translateY(0) rotate(2.5deg) scale(1);
-}
-
-/* Карточка 5 (Фиолетовая): вверх и вправо */
-.note-5-t {
-  bottom: calc(100% - 14px);
-  left: 15px;
-  transform: translateY(35px) rotate(-3.5deg) scale(0.85);
-}
-.board-card:hover .note-5-t {
-  transform: translateY(0) rotate(-2deg) scale(1);
-}
-
-.note-5-r {
-  top: 5px;
-  left: calc(100% - 14px);
-  transform: translateX(-35px) rotate(3deg) scale(0.85);
-}
-.board-card:hover .note-5-r {
-  transform: translateX(0) rotate(2.5deg) scale(1);
-}
-
-/* Адаптация для мобильных экранов и планшетов */
+/* ================= МОБИЛЬНАЯ ВЕРСИЯ (ОДИН СВЕРХУ, ОДИН СНИЗУ) ================= */
 @media (max-width: 1023px) {
   .hover-note {
-    width: 210px;
-    min-height: 155px;
-    top: calc(100% - 10px) !important;
-    bottom: auto !important;
-  }
-  .hover-note:nth-of-type(2) {
-    left: -12px !important;
+    width: calc(100% - 24px);
+    max-width: 295px;
+    min-height: 145px;
+    left: 50% !important;
     right: auto !important;
-    transform: translateY(-20px) rotate(-3deg) scale(0.85);
   }
+
+  /* Верхний белый лист: вылезает вверх */
+  .note-mobile-top,
+  .hover-note:nth-of-type(2) {
+    bottom: calc(100% - 18px) !important;
+    top: auto !important;
+    transform: translateX(-50%) translateY(24px) rotate(-1.5deg) scale(0.92);
+  }
+  .board-card:hover .note-mobile-top,
+  .board-card.is-open .note-mobile-top,
+  .board-card:hover .hover-note:nth-of-type(2),
+  .board-card.is-open .hover-note:nth-of-type(2) {
+    transform: translateX(-50%) translateY(-18px) rotate(-2deg) scale(1) !important;
+  }
+
+  /* Нижний белый лист: вылезает вниз */
+  .note-mobile-bottom,
   .hover-note:nth-of-type(3) {
-    right: -12px !important;
-    left: auto !important;
-    transform: translateY(-20px) rotate(3deg) scale(0.85);
+    top: calc(100% - 18px) !important;
+    bottom: auto !important;
+    transform: translateX(-50%) translateY(-24px) rotate(1.5deg) scale(0.92);
   }
-  .board-card:hover .hover-note:nth-of-type(2) {
-    transform: translateY(0) rotate(-3deg) scale(1);
-  }
-  .board-card:hover .hover-note:nth-of-type(3) {
-    transform: translateY(0) rotate(3deg) scale(1);
+  .board-card:hover .note-mobile-bottom,
+  .board-card.is-open .note-mobile-bottom,
+  .board-card:hover .hover-note:nth-of-type(3),
+  .board-card.is-open .hover-note:nth-of-type(3) {
+    transform: translateX(-50%) translateY(18px) rotate(2deg) scale(1) !important;
   }
 }
 

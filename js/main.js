@@ -136,6 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (sticker) {
+      // При выборе стикера закрываем открытые карточки
+      closeAllCards();
+
       const activeBtn = document.querySelector(`.sticker-btn[data-sticker="${sticker}"]`);
       if (activeBtn) {
         activeBtn.classList.add('ring-2', 'ring-amber-500', 'bg-amber-100');
@@ -158,6 +161,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // ================= ОТКРЫТИЕ КАРТОЧЕК ПО ТАПУ / КЛИКУ =================
+  const boardCards = document.querySelectorAll('.board-card');
+  const cardsGrid = document.getElementById('cards-grid') || document.querySelector('.cards-grid');
+
+  function closeAllCards() {
+    boardCards.forEach(c => c.classList.remove('is-open'));
+    if (cardsGrid) cardsGrid.classList.remove('has-open-card');
+  }
+
+  boardCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      // Если выбран режим стикеров — не трогаем карточки
+      if (currentSticker) return;
+
+      // Если кликнули по интерактивной ссылке/кнопке внутри карточки — даём сработать ссылке
+      if (e.target.closest('a, button')) return;
+
+      const isCurrentlyOpen = card.classList.contains('is-open');
+
+      // Закрываем все остальные открытые карточки
+      boardCards.forEach(c => {
+        if (c !== card) c.classList.remove('is-open');
+      });
+
+      // Переключаем текущую
+      if (isCurrentlyOpen) {
+        card.classList.remove('is-open');
+        if (cardsGrid) cardsGrid.classList.remove('has-open-card');
+      } else {
+        card.classList.add('is-open');
+        if (cardsGrid) cardsGrid.classList.add('has-open-card');
+      }
+    });
+  });
+
+  // Закрытие карточки при клике в любое свободное место доски/страницы
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.board-card, .sticker-btn, #pointer-btn, #clear-stickers-btn, #garland-toggle, #copy-email-btn')) {
+      closeAllCards();
+    }
+  });
+
   stickerBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -178,7 +223,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setMode(null);
+    if (e.key === 'Escape') {
+      setMode(null);
+      closeAllCards();
+    }
   });
 
   if (corkBoard) {
