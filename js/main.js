@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Копирование корпоративной почты
+  // Копирование почты
   const copyEmailBtn = document.getElementById('copy-email-btn');
   const emailIcon = document.getElementById('email-icon');
   const emailText = document.getElementById('email-text');
@@ -67,7 +67,84 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Открытие и закрытие карточек (по тапу на телефоне и клику на ноутбуке)
+  // ================= МУЗЫКАЛЬНЫЙ ПЛЕЕР-ВИДЖЕТ =================
+  const trackBtns = Array.from(document.querySelectorAll('.playlist-track'));
+  const playerTitle = document.getElementById('player-title');
+  const playerArtist = document.getElementById('player-artist');
+  const playerCurrTime = document.getElementById('player-curr-time');
+  const playerDurTime = document.getElementById('player-dur-time');
+  const playerProgress = document.getElementById('player-progress');
+  const playerCover = document.getElementById('player-cover');
+  const playerToggle = document.getElementById('player-toggle');
+  const playerPrev = document.getElementById('player-prev');
+  const playerNext = document.getElementById('player-next');
+  const playerStatusText = document.getElementById('player-status-text');
+  const playerStatusDot = document.getElementById('player-status-dot');
+
+  let currentTrackIndex = 0;
+  let isPlaying = true;
+
+  function setPlayingState(playing) {
+    isPlaying = playing;
+    if (playerToggle) playerToggle.textContent = isPlaying ? '⏸' : '▶';
+    if (playerStatusText) playerStatusText.textContent = isPlaying ? 'сейчас играет...' : 'на паузе';
+    if (playerStatusDot) playerStatusDot.classList.toggle('animate-pulse', isPlaying);
+  }
+
+  function selectTrack(index) {
+    if (!trackBtns.length) return;
+    currentTrackIndex = (index + trackBtns.length) % trackBtns.length;
+    const btn = trackBtns[currentTrackIndex];
+
+    trackBtns.forEach((b, idx) => {
+      const isSelected = idx === currentTrackIndex;
+      b.classList.toggle('is-active', isSelected);
+      const ind = b.querySelector('.track-indicator');
+      if (ind) ind.textContent = isSelected ? '▸' : '';
+    });
+
+    if (playerTitle) playerTitle.textContent = btn.dataset.title;
+    if (playerArtist) playerArtist.textContent = btn.dataset.artist;
+    if (playerCurrTime) playerCurrTime.textContent = btn.dataset.curr;
+    if (playerDurTime) playerDurTime.textContent = btn.dataset.dur;
+    if (playerProgress) playerProgress.style.width = btn.dataset.prog;
+
+    if (playerCover && btn.dataset.cover) {
+      playerCover.src = btn.dataset.cover;
+    }
+
+    setPlayingState(true);
+  }
+
+  trackBtns.forEach((btn, idx) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectTrack(idx);
+    });
+  });
+
+  if (playerToggle) {
+    playerToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setPlayingState(!isPlaying);
+    });
+  }
+
+  if (playerPrev) {
+    playerPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectTrack(currentTrackIndex - 1);
+    });
+  }
+
+  if (playerNext) {
+    playerNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectTrack(currentTrackIndex + 1);
+    });
+  }
+
+  // ================= ОТКРЫТИЕ И ЗАКРЫТИЕ КАРТОЧЕК =================
   const boardCards = document.querySelectorAll('.board-card');
 
   function updateContainerZIndex() {
@@ -79,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   boardCards.forEach(card => {
     card.addEventListener('click', (e) => {
-      if (currentSticker || e.target.closest('a, button, .placed-sticker')) return;
+      if (currentSticker || e.target.closest('a, button, .placed-sticker, .music-paper-widget')) return;
 
       e.stopPropagation();
       const wasOpen = card.classList.contains('is-open');
@@ -102,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Тап по свободной доске закрывает карточки
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.board-card')) {
       boardCards.forEach(c => c.classList.remove('is-open', 'force-closed'));
@@ -110,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Логика стикеров и localStorage
+  // ================= ЛОГИКА СТИКЕРОВ И LOCALSTORAGE =================
   const stickerLayer = document.getElementById('sticker-layer');
   const stickerBtns = document.querySelectorAll('.sticker-btn');
   const pointerBtn = document.getElementById('pointer-btn');
@@ -161,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     stickerEl.dataset.emoji = emoji;
     stickerEl.style.left = xPercent;
     stickerEl.style.top = yPercent;
+    stickerEl.setAttribute('role', 'button');
     
     const randomRot = rot || (Math.random() * 32 - 16).toFixed(1);
     stickerEl.dataset.rot = randomRot;
@@ -169,6 +246,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     stickerEl.addEventListener('click', (ev) => {
       ev.stopPropagation();
+      ev.preventDefault();
+      if (stickerEl.dataset.removing === 'true') return;
+      stickerEl.dataset.removing = 'true';
+      stickerEl.style.pointerEvents = 'none';
       stickerEl.classList.add('removing');
       setTimeout(() => {
         stickerEl.remove();
@@ -242,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     corkBoard.addEventListener('click', (e) => {
       if (!currentSticker) return;
-      if (e.target.classList.contains('placed-sticker')) return;
+      if (e.target.closest('.placed-sticker')) return;
       if (e.target.closest('.board-card, .hover-note, .paper-badge, footer')) return;
 
       const rect = corkBoard.getBoundingClientRect();
