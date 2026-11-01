@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const playerPrev = document.getElementById('player-prev');
   const playerNext = document.getElementById('player-next');
   const playerStatusText = document.getElementById('player-status-text');
-  const playerStatusDot = document.getElementById('player-status-dot');
 
   let currentTrackIndex = 0;
   let isPlaying = true;
@@ -88,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
     isPlaying = playing;
     if (playerToggle) playerToggle.textContent = isPlaying ? '⏸' : '▶';
     if (playerStatusText) playerStatusText.textContent = isPlaying ? 'сейчас играет...' : 'на паузе';
-    if (playerStatusDot) playerStatusDot.classList.toggle('animate-pulse', isPlaying);
   }
 
   function selectTrack(index) {
@@ -154,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  boardCards.forEach(card => {
+  boardCards.forEach((card, idx) => {
     card.addEventListener('click', (e) => {
       if (currentSticker || e.target.closest('a, button, .placed-sticker, .music-paper-widget')) return;
 
@@ -167,6 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!wasOpen) {
         card.classList.add('is-open');
+
+        if (window.innerWidth < 1024 && idx === boardCards.length - 1) {
+          setTimeout(() => {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 120);
+        }
       } else {
         card.classList.add('force-closed');
       }

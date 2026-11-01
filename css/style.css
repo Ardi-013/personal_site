@@ -164,23 +164,31 @@ header .paper-badge {
   transition: box-shadow 0.25s ease;
 }
 
-/* На ПК */
+/* На ПК: hover срабатывает только когда нет зафиксированной карточки */
 @media (min-width: 1024px) {
-  .board-card:hover:not(.force-closed),
+  #cards-container:not(.has-open-card):not(:has(.is-open)) .board-card:hover:not(.force-closed),
   .board-card.is-open:not(.force-closed) {
     transform: scale(1.02) rotate(0deg) !important;
     z-index: 45 !important;
   }
 
-  .board-card:hover:not(.force-closed) .card-surface,
+  #cards-container:not(.has-open-card):not(:has(.is-open)) .board-card:hover:not(.force-closed) .card-surface,
   .board-card.is-open:not(.force-closed) .card-surface {
     box-shadow: 0 22px 38px -8px rgba(0, 0, 0, 0.45) !important;
   }
 
-  .board-card:hover:not(.force-closed) .hover-note,
+  #cards-container:not(.has-open-card):not(:has(.is-open)) .board-card:hover:not(.force-closed) .hover-note,
   .board-card.is-open:not(.force-closed) .hover-note {
     opacity: 1;
     pointer-events: auto;
+  }
+
+  /* Блокировка соседних карточек при фиксации одной */
+  #cards-container.has-open-card .board-card:not(.is-open) .hover-note,
+  #cards-container:has(.is-open) .board-card:not(.is-open) .hover-note {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
   }
 }
 
@@ -203,7 +211,7 @@ header .paper-badge {
 /* ================= СВЕТЛЫЙ БУМАЖНЫЙ ПЛЕЕР ================= */
 .music-paper-widget {
   width: 260px;
-  padding: 13px 14px;
+  padding: 12px 14px;
   background-image: radial-gradient(#e9d5ff 0.75px, transparent 0.75px);
   background-size: 14px 14px;
 }
@@ -252,17 +260,46 @@ header .paper-badge {
 }
 
 /* ================= ПОЗИЦИИ НА ПК ================= */
-.note-2-l { top: 5px; right: calc(100% - 14px); transform: translateX(35px) rotate(-4deg) scale(0.85); }
-.board-card:hover:not(.force-closed) .note-2-l, .board-card.is-open:not(.force-closed) .note-2-l { transform: translateX(0) rotate(-3deg) scale(1); }
+/* Розовая карточка: записка сдвинута левее и выше, полароид с манекеном — правее */
+.note-2-l { 
+  top: -25px; 
+  right: calc(100% + 24px); 
+  transform: translateX(35px) rotate(-4deg) scale(0.85); 
+}
+.board-card:hover:not(.force-closed) .note-2-l, 
+.board-card.is-open:not(.force-closed) .note-2-l { 
+  transform: translateX(0) rotate(-3deg) scale(1); 
+}
 
-.polaroid-2-r { top: 10px; left: calc(100% + 5px); transform: translateX(-35px) rotate(4deg) scale(0.85); }
-.board-card:hover:not(.force-closed) .polaroid-2-r, .board-card.is-open:not(.force-closed) .polaroid-2-r { transform: translateX(0) rotate(3deg) scale(1); }
+.polaroid-2-r { 
+  top: 10px; 
+  left: calc(100% + 5px); 
+  transform: translateX(-35px) rotate(4deg) scale(0.85); 
+}
+.board-card:hover:not(.force-closed) .polaroid-2-r, 
+.board-card.is-open:not(.force-closed) .polaroid-2-r { 
+  transform: translateX(0) rotate(3deg) scale(1); 
+}
 
-.polaroid-2-b1 { top: calc(100% + 10px); left: -45px; transform: translateY(-35px) rotate(-6deg) scale(0.85); }
-.board-card:hover:not(.force-closed) .polaroid-2-b1, .board-card.is-open:not(.force-closed) .polaroid-2-b1 { transform: translateY(0) rotate(-5deg) scale(1); }
+.polaroid-2-b1 { 
+  top: calc(100% + 12px); 
+  left: -15px; 
+  transform: translateY(-35px) rotate(-5deg) scale(0.85); 
+}
+.board-card:hover:not(.force-closed) .polaroid-2-b1, 
+.board-card.is-open:not(.force-closed) .polaroid-2-b1 { 
+  transform: translateY(0) rotate(-4deg) scale(1); 
+}
 
-.polaroid-2-b2 { top: calc(100% + 20px); left: 175px; transform: translateY(-35px) rotate(6deg) scale(0.85); }
-.board-card:hover:not(.force-closed) .polaroid-2-b2, .board-card.is-open:not(.force-closed) .polaroid-2-b2 { transform: translateY(0) rotate(5deg) scale(1); }
+.polaroid-2-b2 { 
+  top: calc(100% + 22px); 
+  left: 185px; 
+  transform: translateY(-35px) rotate(6deg) scale(0.85); 
+}
+.board-card:hover:not(.force-closed) .polaroid-2-b2, 
+.board-card.is-open:not(.force-closed) .polaroid-2-b2 { 
+  transform: translateY(0) rotate(5deg) scale(1); 
+}
 
 .polaroid-3-1 { top: -95px; right: calc(100% + 12px); transform: translateX(35px) rotate(-7deg) scale(0.85); }
 .board-card:hover:not(.force-closed) .polaroid-3-1, .board-card.is-open:not(.force-closed) .polaroid-3-1 { transform: translateX(0) rotate(-7deg) scale(1); }
@@ -273,8 +310,6 @@ header .paper-badge {
 .polaroid-3-3 { top: calc(100% + 20px); left: 35px; transform: translateY(-35px) rotate(-2deg) scale(0.85); }
 .board-card:hover:not(.force-closed) .polaroid-3-3, .board-card.is-open:not(.force-closed) .polaroid-3-3 { transform: translateY(0) rotate(-2deg) scale(1); }
 
-.note-1-r { top: -15px; left: calc(100% - 14px); transform: translateX(-35px) rotate(4deg) scale(0.85); }
-.board-card:hover:not(.force-closed) .note-1-r, .board-card.is-open:not(.force-closed) .note-1-r { transform: translateX(0) rotate(3deg) scale(1); }
 .note-1-b { top: calc(100% - 14px); left: -20px; transform: translateY(-35px) rotate(-3deg) scale(0.85); }
 .board-card:hover:not(.force-closed) .note-1-b, .board-card.is-open:not(.force-closed) .note-1-b { transform: translateY(0) rotate(-2deg) scale(1); }
 
@@ -295,9 +330,10 @@ header .paper-badge {
 .note-5-t { bottom: calc(100% - 14px); left: 15px; transform: translateY(35px) rotate(-3.5deg) scale(0.85); }
 .board-card:hover:not(.force-closed) .note-5-t, .board-card.is-open:not(.force-closed) .note-5-t { transform: translateY(0) rotate(-2deg) scale(1); }
 
+/* Плеер на ПК */
 .note-5-r { 
   top: 0px; 
-  left: calc(100% - 28px); 
+  left: calc(100% - 6px); 
   transform: translateX(-35px) rotate(3deg) scale(0.85); 
 }
 .board-card:hover:not(.force-closed) .note-5-r, 
@@ -305,7 +341,7 @@ header .paper-badge {
   transform: translateX(0) rotate(2deg) scale(1); 
 }
 
-/* ================= МОБИЛЬНАЯ АДАПТАЦИЯ (ВЫЛЕТ ВВЕРХ И ВНИЗ) ================= */
+/* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
 @media (max-width: 1023px) {
   .hover-note {
     width: 265px !important;
@@ -333,7 +369,7 @@ header .paper-badge {
 
   .note-m-top {
     top: auto !important;
-    bottom: calc(100% - 15px) !important;
+    bottom: calc(100% - 12px) !important;
     transform: translate(-50%, 25px) rotate(-2.5deg) scale(0.9) !important;
   }
   .board-card.is-open .note-m-top {
@@ -342,11 +378,30 @@ header .paper-badge {
 
   .note-m-bottom {
     bottom: auto !important;
-    top: calc(100% - 15px) !important;
+    top: calc(100% - 12px) !important;
     transform: translate(-50%, -25px) rotate(2.5deg) scale(0.9) !important;
   }
   .board-card.is-open .note-m-bottom {
     transform: translate(-50%, 0) rotate(2deg) scale(1) !important;
+  }
+
+  /* Компактный плеер на мобилках */
+  .music-paper-widget {
+    width: 270px !important;
+    padding: 10px 12px !important;
+  }
+  .music-paper-widget .playlist-track {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    font-size: 10.5px !important;
+  }
+
+  /* Отодвигаем футер вниз при открытии последней карточки на телефоне */
+  .board-card:last-child {
+    transition: margin-bottom 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .board-card:last-child.is-open {
+    margin-bottom: 255px !important;
   }
 
   .polaroid {
