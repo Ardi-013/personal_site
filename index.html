@@ -18,7 +18,7 @@
     <div class="brass-corner bottom-0 left-0 -rotate-90"></div>
     <div class="brass-corner bottom-0 right-0 rotate-180"></div>
 
-    <!-- Гирлянда: поднята выше к верхнему краю рамы, чтобы не перекрывать кнопки -->
+    <!-- Гирлянда -->
     <div id="garland" class="garland-container pointer-events-none">
       <svg class="garland-svg" viewBox="0 0 1200 90" preserveAspectRatio="none">
         <path d="M -20,0 Q 300,38 600,10 Q 900,38 1220,0" fill="none" stroke="#261c14" stroke-width="4" stroke-linecap="round"/>
@@ -33,29 +33,50 @@
       <div class="garland-bulb" style="left: 90%; top: 11px; --rot: -6deg;"></div>
     </div>
 
-    <!-- Слой со стикерами (на уровне пробки позади записей) -->
+    <!-- Слой со стикерами (позади карточек) -->
     <div id="sticker-layer" class="absolute inset-0 pointer-events-none z-[5]"></div>
 
-    <!-- Шапка: чуть опущена (pt-6), чтобы лежать аккуратно под гирляндой -->
-    <header class="relative z-30 grid grid-cols-2 md:grid-cols-3 items-center gap-3 sm:gap-4 mb-6 sm:mb-10 pt-4 sm:pt-6">
+    <!-- Шапка: z-20 -->
+    <header class="relative z-20 flex flex-wrap md:grid md:grid-cols-3 items-start justify-between gap-y-4 mb-6 sm:mb-10 pt-6">
       
-      <!-- 1. Левый край: карточка профиля -->
-      <div class="col-span-1 justify-self-start order-1">
-        <div class="paper-badge bg-white p-3 pt-4 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[-2deg] flex items-center gap-3">
+      <!-- 1. Левый край: профиль с увеличенным фото -->
+      <div class="order-1 md:order-1 justify-self-start">
+        <div class="paper-badge bg-white pl-2.5 pr-5 pt-4 pb-2.5 sm:pl-3 sm:pr-6 sm:pt-5 sm:pb-3 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[-2deg] flex items-center gap-3.5 sm:gap-4">
           <div class="pushpin pin-red"></div>
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-200 to-rose-200 flex items-center justify-center text-xl shadow-xs">
-            👩‍💻
+          
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gradient-to-tr from-amber-200 to-rose-200 flex-shrink-0 shadow-sm border border-stone-200/70">
+            <img src="images/my-face.jpg" alt="Диана" class="w-full h-full object-cover">
           </div>
-          <div>
-            <div class="font-bold text-sm text-stone-900 leading-tight">Диана</div>
-            <div class="text-[11px] text-stone-600">Студентка ДВФУ</div>
-            <span class="inline-block mt-0.5 px-1.5 py-0.5 bg-amber-100 text-amber-900 font-mono text-[10px] rounded">ardi013.ru</span>
+          
+          <div class="flex flex-col justify-center pr-1">
+            <div class="font-bold text-base sm:text-lg text-stone-900 leading-tight">Диана</div>
+            <div class="text-xs sm:text-sm text-stone-600 mt-0.5">Студентка ДВФУ</div>
+            <span class="inline-block mt-1 px-2 py-0.5 bg-amber-100 text-amber-900 font-mono text-[11px] sm:text-xs rounded font-medium w-fit">ardi013.ru</span>
           </div>
         </div>
       </div>
 
-      <!-- 2. Середина: плашка с наклейками -->
-      <div class="col-span-2 md:col-span-1 justify-self-center order-3 md:order-2 w-full flex justify-center">
+      <!-- 2. Правый край на мобильном: лампочка-выключатель -->
+      <div class="order-2 md:order-3 justify-self-end">
+        <button id="garland-toggle" class="paper-badge bg-[#fffdf5] p-2.5 pt-3.5 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[2.5deg] flex flex-col items-center justify-center cursor-pointer group" title="Включить / выключить гирлянду">
+          <div class="pushpin pin-gold"></div>
+          <svg class="w-9 h-9 drawn-bulb transition-transform group-hover:scale-110" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g class="bulb-rays" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round">
+              <line x1="32" y1="3" x2="32" y2="8" />
+              <line x1="11" y1="12" x2="15" y2="16" />
+              <line x1="53" y1="12" x2="49" y2="16" />
+              <line x1="5" y1="30" x2="10" y2="30" />
+              <line x1="59" y1="30" x2="54" y2="30" />
+            </g>
+            <path class="bulb-glass" d="M22 44 C15 38 14 29 17 21 C20 14 26 11 32 11 C38 11 44 14 47 21 C50 29 49 38 42 44 C40 46 39 48 39 50 L25 50 C25 48 24 46 22 44 Z" fill="#fef08a" stroke="#44403c" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M28 50 L28 36 C28 33 25 31 27 29 C29 27 31 31 32 31 C33 31 35 27 37 29 C39 31 36 33 36 36 L36 50" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M25 50 H39 M26 54 H38 M28 58 H36" stroke="#44403c" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- 3. Панель стикеров -->
+      <div class="order-3 md:order-2 w-full md:w-auto flex justify-center justify-self-center mt-1 md:mt-0">
         <div class="paper-badge bg-[#fffef0] px-3 py-2.5 rounded-sm shadow-md border-b-2 border-r-2 border-amber-200/90 rotate-[0.6deg] flex items-center gap-2">
           <div class="washi-tape"></div>
           <button id="pointer-btn" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-white transition flex items-center gap-1 shadow-xs">
@@ -78,155 +99,130 @@
         </div>
       </div>
 
-      <!-- 3. Правый край: маленькая бумажка с нарисованной лампочкой-выключателем -->
-      <div class="col-span-1 justify-self-end order-2 md:order-3">
-        <button id="garland-toggle" class="paper-badge bg-[#fffdf5] p-2.5 pt-3.5 rounded-sm shadow-md border-b-2 border-r-2 border-stone-300 rotate-[2.5deg] flex flex-col items-center justify-center cursor-pointer group" title="Включить / выключить гирлянду">
-          <div class="pushpin pin-gold"></div>
-          <svg class="w-9 h-9 drawn-bulb transition-transform group-hover:scale-110" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g class="bulb-rays" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round">
-              <line x1="32" y1="3" x2="32" y2="8" />
-              <line x1="11" y1="12" x2="15" y2="16" />
-              <line x1="53" y1="12" x2="49" y2="16" />
-              <line x1="5" y1="30" x2="10" y2="30" />
-              <line x1="59" y1="30" x2="54" y2="30" />
-            </g>
-            <path class="bulb-glass" d="M22 44 C15 38 14 29 17 21 C20 14 26 11 32 11 C38 11 44 14 47 21 C50 29 49 38 42 44 C40 46 39 48 39 50 L25 50 C25 48 24 46 22 44 Z" fill="#fef08a" stroke="#44403c" stroke-width="2.5" stroke-linejoin="round"/>
-            <path d="M28 50 L28 36 C28 33 25 31 27 29 C29 27 31 31 32 31 C33 31 35 27 37 29 C39 31 36 33 36 36 L36 50" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M25 50 H39 M26 54 H38 M28 58 H36" stroke="#44403c" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-
     </header>
 
-    <!-- Основное поле доски с увеличенными карточками и большими бумажками -->
-    <div id="cards-grid" class="cards-grid relative z-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-y-32 sm:gap-y-28 lg:gap-y-28 gap-x-10 lg:gap-x-14 justify-items-center items-center my-auto py-8 px-4 sm:px-10">
+    <!-- Поле карточек (с id="cards-container") -->
+    <div id="cards-container" class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-y-24 lg:gap-y-28 gap-x-10 lg:gap-x-14 justify-items-center items-center my-auto py-8 px-4 sm:px-10">
 
-      <!-- КАРТОЧКА 1 (Жёлтая, верхний левый угол) -->
+      <!-- Карточка 1 (Жёлтая) -->
       <div class="board-card lg:col-span-2 rotate-[-2.5deg] lg:-translate-x-4 lg:-translate-y-2">
-        <div class="card-surface bg-[#fff9b0] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-amber-300/80">
+        <div class="card-surface bg-[#fff9b0] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-amber-300/80 min-h-[215px]">
           <div class="washi-tape"></div>
-          <h3 class="font-bold text-amber-950 text-base flex items-center gap-1.5 mb-3 mt-1">
-            <span>🎯</span> План на лабу ТРПО
-          </h3>
-          <div class="flex items-center justify-between pt-3 border-t border-amber-300/70 text-xs text-amber-900/80 font-medium">
-            <span class="paper-tag bg-amber-200/80 text-amber-950">GitHub Pages</span>
-            <span class="paper-tag bg-amber-200/80 text-amber-950">Let's Encrypt</span>
-          </div>
+          <!-- ТЕКСТ КАРТОЧКИ 1 -->
         </div>
 
-        <div class="hover-note note-1-r note-mobile-top bg-[#fffef0] border-amber-200">
+        <div class="hover-note note-1-r note-m-top bg-[#fffef0] border-amber-200">
           <div class="washi-tape"></div>
+          <!-- БУМАЖКА 1.1 -->
         </div>
-        <div class="hover-note note-1-b note-mobile-bottom bg-[#fffdf2] border-amber-300">
+        <div class="hover-note note-1-b note-m-bottom bg-[#fffdf2] border-amber-300">
           <div class="pushpin pin-gold"></div>
+          <!-- БУМАЖКА 1.2 -->
         </div>
       </div>
 
-      <!-- КАРТОЧКА 2 (Розовая, верхний центр) -->
+      <!-- Карточка 2 (Розовая: 1 бумажка слева + 3 полароида) -->
       <div class="board-card lg:col-span-2 rotate-[1.8deg] lg:translate-y-3">
-        <div class="card-surface bg-[#ffd6e0] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-rose-300">
+        <div class="card-surface bg-[#ffd6e0] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-rose-300 min-h-[215px]">
           <div class="pushpin pin-gold"></div>
-          <h3 class="font-bold text-rose-950 text-base flex items-center gap-1.5 mb-2 mt-1">
-            <span>🌸</span> Чем увлекаюсь
-          </h3>
+          <!-- ТЕКСТ КАРТОЧКИ 2 -->
         </div>
 
-        <div class="hover-note note-2-l note-mobile-top bg-[#fff5f7] border-rose-200">
+        <div class="hover-note note-2-l note-m-top bg-[#fff5f7] border-rose-200">
           <div class="washi-tape"></div>
+          <!-- ТЕКСТ БУМАЖКИ ХОББИ -->
         </div>
-        <div class="hover-note note-2-r note-mobile-bottom bg-[#ffeef2] border-rose-200">
+
+        <div class="hover-note polaroid polaroid-2-r polaroid-m-sub1">
           <div class="pushpin pin-red"></div>
-        </div>
-      </div>
-
-      <!-- КАРТОЧКА 3 (Зелёная, верхний правый угол) -->
-      <div class="board-card lg:col-span-2 rotate-[-2deg] lg:translate-x-4 lg:-translate-y-1">
-        <div class="card-surface bg-[#dcfce7] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-emerald-300">
-          <div class="pushpin pin-green"></div>
-          <h3 class="font-bold text-emerald-950 text-base flex items-center gap-1.5 mb-2.5 mt-1">
-            <span>💻</span> Мой стек технологий
-          </h3>
+          <div class="polaroid-photo"></div>
         </div>
 
-        <div class="hover-note note-3-l note-mobile-top bg-[#f2fdf6] border-emerald-200">
-          <div class="pushpin pin-green"></div>
-        </div>
-        <div class="hover-note note-3-b note-mobile-bottom bg-[#ecfdf5] border-emerald-200">
-          <div class="washi-tape"></div>
-        </div>
-      </div>
-
-      <!-- КАРТОЧКА 4 (Голубая, нижний ряд слева) -->
-      <div class="board-card lg:col-start-2 lg:col-span-2 rotate-[2deg] lg:-translate-x-6 lg:translate-y-2">
-        <div class="card-surface bg-[#e0f2fe] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-sky-300">
-          <div class="washi-tape washi-tape-cyan"></div>
-          <div class="flex items-center justify-between mb-2 mt-1">
-            <h3 class="font-bold text-sky-950 text-base">personal_site</h3>
-            <span class="paper-tag bg-sky-200 text-sky-900 font-mono text-[10px]">v1.0</span>
-          </div>
-          <div class="pt-3 border-t border-sky-300/60 flex items-center justify-between">
-            <a href="https://github.com/Ardi-013/personal_site" target="_blank" class="paper-tag bg-white hover:bg-sky-50 text-sky-950 font-semibold shadow-xs flex items-center gap-1 transition">
-              <span>Репозиторий</span> <span>→</span>
-            </a>
-            <span class="text-[10px] text-sky-800 font-mono">Tailwind</span>
-          </div>
-        </div>
-
-        <div class="hover-note note-4-l note-mobile-top bg-[#f0f9ff] border-sky-200">
-          <div class="washi-tape"></div>
-        </div>
-        <div class="hover-note note-4-t note-mobile-bottom bg-[#e6f6fe] border-sky-200">
-          <div class="washi-tape washi-tape-cyan"></div>
-        </div>
-      </div>
-
-      <!-- КАРТОЧКА 5 (Фиолетовая, нижний ряд справа) -->
-      <div class="board-card lg:col-start-4 lg:col-span-2 rotate-[-1.8deg] lg:translate-x-6 lg:translate-y-1">
-        <div class="card-surface bg-[#f3e8ff] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-purple-300">
-          <div class="pushpin pin-blue"></div>
-          <div class="flex items-center justify-between mb-2 mt-1">
-            <h3 class="font-bold text-purple-950 text-base">Лабораторные ТРПО</h3>
-            <span class="paper-tag bg-purple-200 text-purple-900 font-mono text-[10px]">ДВФУ</span>
-          </div>
-          <div class="pt-3 border-t border-purple-300/60 flex items-center justify-between">
-            <a href="https://github.com/Ardi-013/polumecenev" target="_blank" class="paper-tag bg-white hover:bg-purple-50 text-purple-950 font-semibold shadow-xs flex items-center gap-1 transition">
-              <span>Репозиторий</span> <span>→</span>
-            </a>
-            <span class="text-[10px] text-purple-800 font-mono">C++ / Python</span>
-          </div>
-        </div>
-
-        <div class="hover-note note-5-t note-mobile-top bg-[#faf5ff] border-purple-200">
-          <div class="washi-tape"></div>
-        </div>
-        <div class="hover-note note-5-r note-mobile-bottom bg-[#fdf4ff] border-purple-200">
+        <div class="hover-note polaroid polaroid-2-b1 polaroid-m-sub2">
           <div class="pushpin pin-gold"></div>
+          <div class="polaroid-photo"></div>
+        </div>
+
+        <div class="hover-note polaroid polaroid-2-b2 polaroid-m-sub3">
+          <div class="washi-tape"></div>
+          <div class="polaroid-photo"></div>
+        </div>
+      </div>
+
+      <!-- Карточка 3 (Зелёная: 3 полароида) -->
+      <div class="board-card lg:col-span-2 rotate-[-2deg] lg:translate-x-4 lg:-translate-y-1">
+        <div class="card-surface bg-[#dcfce7] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-emerald-300 min-h-[215px]">
+          <div class="pushpin pin-green"></div>
+          <!-- ТЕКСТ КАРТОЧКИ 3 -->
+        </div>
+
+        <div class="hover-note polaroid polaroid-3-1">
+          <div class="pushpin pin-red"></div>
+          <div class="polaroid-photo"></div>
+        </div>
+
+        <div class="hover-note polaroid polaroid-3-2">
+          <div class="washi-tape"></div>
+          <div class="polaroid-photo"></div>
+        </div>
+
+        <div class="hover-note polaroid polaroid-3-3">
+          <div class="pushpin pin-blue"></div>
+          <div class="polaroid-photo"></div>
+        </div>
+      </div>
+
+      <!-- Карточка 4 (Голубая) -->
+      <div class="board-card lg:col-start-2 lg:col-span-2 rotate-[2deg] lg:-translate-x-6 lg:translate-y-2">
+        <div class="card-surface bg-[#e0f2fe] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-sky-300 min-h-[215px]">
+          <div class="washi-tape washi-tape-cyan"></div>
+          <!-- ТЕКСТ КАРТОЧКИ 4 -->
+        </div>
+
+        <div class="hover-note note-4-l note-m-top bg-[#f0f9ff] border-sky-200">
+          <div class="washi-tape"></div>
+          <!-- БУМАЖКА 4.1 -->
+        </div>
+        <div class="hover-note note-4-t note-m-bottom bg-[#e6f6fe] border-sky-200">
+          <div class="washi-tape washi-tape-cyan"></div>
+          <!-- БУМАЖКА 4.2 -->
+        </div>
+      </div>
+
+      <!-- Карточка 5 (Фиолетовая) -->
+      <div class="board-card lg:col-start-4 lg:col-span-2 rotate-[-1.8deg] lg:translate-x-6 lg:translate-y-1">
+        <div class="card-surface bg-[#f3e8ff] p-6 rounded-sm shadow-lg border-b-2 border-r-2 border-purple-300 min-h-[215px]">
+          <div class="pushpin pin-blue"></div>
+          <!-- ТЕКСТ КАРТОЧКИ 5 -->
+        </div>
+
+        <div class="hover-note note-5-t note-m-top bg-[#faf5ff] border-purple-200">
+          <div class="washi-tape"></div>
+          <!-- БУМАЖКА 5.1 -->
+        </div>
+        <div class="hover-note note-5-r note-m-bottom bg-[#fdf4ff] border-purple-200">
+          <div class="pushpin pin-gold"></div>
+          <!-- БУМАЖКА 5.2 -->
         </div>
       </div>
 
     </div>
 
-    <!-- Подвал с рабочей ссылкой на Telegram и кнопкой копирования корпоративной почты -->
-    <footer class="relative z-10 pt-4 border-t border-amber-950/20 flex flex-wrap items-center justify-between gap-3 text-xs mt-12">
+    <!-- Футер: z-20 -->
+    <footer class="relative z-20 pt-4 border-t border-amber-950/20 flex flex-wrap items-center justify-between gap-3 text-xs mt-12">
       <div class="flex flex-wrap items-center gap-2">
         <span class="paper-tag bg-amber-100/90 text-amber-950 font-semibold">📬 Связаться:</span>
-        
         <a href="https://t.me/masterofmunchkin" target="_blank" rel="noopener noreferrer" class="paper-tag bg-white hover:bg-sky-50 text-stone-800 font-semibold shadow-xs flex items-center gap-1.5 transition">
           <span>✈️</span>
           <span>Telegram</span>
         </a>
-        
         <a href="https://github.com/Ardi-013" target="_blank" rel="noopener noreferrer" class="paper-tag bg-white hover:bg-stone-100 text-stone-800 font-semibold shadow-xs flex items-center gap-1.5 transition">
           <span>🐙</span>
           <span>GitHub</span>
         </a>
-        
-        <!-- Интерактивная кнопка почты: показывает адрес и копирует его по клику -->
         <button id="copy-email-btn" data-email="kozik.dv@dvfu.ru" class="paper-tag bg-white hover:bg-amber-50 text-stone-800 font-semibold shadow-xs flex items-center gap-1.5 cursor-pointer transition active:scale-95" title="Нажми, чтобы скопировать адрес почты">
           <span id="email-icon">✉️</span>
           <span id="email-text" class="font-mono text-[11px]">kozik.dv@dvfu.ru</span>
-          <span id="email-copy-hint" class="text-[10px] text-stone-400">📋</span>
         </button>
       </div>
       <div class="text-[11px] text-amber-950/80 font-medium font-mono">
@@ -237,6 +233,6 @@
 
   <div id="ghost-sticker" class="fixed pointer-events-none text-3xl z-[70] select-none hidden" style="transform: translate(0, 0);"></div>
 
-  <script src="js/main.js?v=12"></script>
+  <script src="js/main.js?v=13"></script>
 </body>
 </html>

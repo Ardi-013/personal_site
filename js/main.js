@@ -1,54 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const corkBoard = document.getElementById('cork-board');
+  const cardsContainer = document.getElementById('cards-container');
 
-  // Отрисовываем текстуру пробки один раз — фон статичен
   function renderCorkTexture() {
     if (!corkBoard) return;
-
     const canvas = document.createElement('canvas');
     canvas.width = 320;
     canvas.height = 320;
     const ctx = canvas.getContext('2d');
-
     ctx.fillStyle = '#ba8852';
     ctx.fillRect(0, 0, 320, 320);
 
     const shades = ['#7c461d', '#572e10', '#d89f66', '#9c6434', '#e2b582', '#45220c'];
-
     for (let i = 0; i < 4500; i++) {
-      const x = Math.random() * 320;
-      const y = Math.random() * 320;
-      const r = Math.random() * 2 + 0.3;
+      const x = Math.random() * 320, y = Math.random() * 320, r = Math.random() * 2 + 0.3;
       ctx.fillStyle = shades[Math.floor(Math.random() * shades.length)];
       ctx.globalAlpha = Math.random() * 0.45 + 0.1;
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
     }
-
     for (let i = 0; i < 80; i++) {
-      const x = Math.random() * 320;
-      const y = Math.random() * 320;
-      const w = Math.random() * 14 + 4;
-      const h = Math.random() * 6 + 2;
+      const x = Math.random() * 320, y = Math.random() * 320, w = Math.random() * 14 + 4, h = Math.random() * 6 + 2;
       ctx.fillStyle = Math.random() > 0.4 ? '#4a250a' : '#f0c896';
       ctx.globalAlpha = Math.random() * 0.35 + 0.15;
-      ctx.beginPath();
-      ctx.ellipse(x, y, w, h, Math.random() * Math.PI, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.beginPath(); ctx.ellipse(x, y, w, h, Math.random() * Math.PI, 0, Math.PI * 2); ctx.fill();
     }
 
     const patternUrl = canvas.toDataURL();
     const vignette = 'radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.35) 100%)';
-
     corkBoard.style.backgroundImage = `${vignette}, url(${patternUrl})`;
     corkBoard.style.backgroundRepeat = 'repeat';
   }
 
   renderCorkTexture();
 
-  // Выключатель гирлянды (только лампочки)
+  // Выключатель гирлянды
   const garlandToggle = document.getElementById('garland-toggle');
   if (garlandToggle && corkBoard) {
     garlandToggle.addEventListener('click', (e) => {
@@ -57,37 +43,74 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Копирование корпоративной почты по клику на кнопку в футере
+  // Копирование корпоративной почты
   const copyEmailBtn = document.getElementById('copy-email-btn');
   const emailIcon = document.getElementById('email-icon');
   const emailText = document.getElementById('email-text');
-  const emailCopyHint = document.getElementById('email-copy-hint');
 
   if (copyEmailBtn && emailText) {
     let copyTimeout = null;
-
     copyEmailBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       const email = copyEmailBtn.getAttribute('data-email') || 'kozik.dv@dvfu.ru';
-
       navigator.clipboard.writeText(email).then(() => {
         if (copyTimeout) clearTimeout(copyTimeout);
-
         if (emailIcon) emailIcon.textContent = '✅';
         emailText.textContent = 'Скопировано!';
         emailText.classList.add('text-emerald-700');
-        if (emailCopyHint) emailCopyHint.classList.add('hidden');
-
         copyTimeout = setTimeout(() => {
           if (emailIcon) emailIcon.textContent = '✉️';
           emailText.textContent = email;
           emailText.classList.remove('text-emerald-700');
-          if (emailCopyHint) emailCopyHint.classList.remove('hidden');
         }, 2000);
       });
     });
   }
 
+  // Открытие и закрытие карточек (по тапу на телефоне и клику на ноутбуке)
+  const boardCards = document.querySelectorAll('.board-card');
+
+  function updateContainerZIndex() {
+    const hasAnyOpen = Array.from(boardCards).some(c => c.classList.contains('is-open'));
+    if (cardsContainer) {
+      cardsContainer.classList.toggle('has-open-card', hasAnyOpen);
+    }
+  }
+
+  boardCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (currentSticker || e.target.closest('a, button, .placed-sticker')) return;
+
+      e.stopPropagation();
+      const wasOpen = card.classList.contains('is-open');
+
+      boardCards.forEach(c => {
+        c.classList.remove('is-open', 'force-closed');
+      });
+
+      if (!wasOpen) {
+        card.classList.add('is-open');
+      } else {
+        card.classList.add('force-closed');
+      }
+      updateContainerZIndex();
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.classList.remove('force-closed');
+      updateContainerZIndex();
+    });
+  });
+
+  // Тап по свободной доске закрывает карточки
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.board-card')) {
+      boardCards.forEach(c => c.classList.remove('is-open', 'force-closed'));
+      updateContainerZIndex();
+    }
+  });
+
+  // Логика стикеров и localStorage
   const stickerLayer = document.getElementById('sticker-layer');
   const stickerBtns = document.querySelectorAll('.sticker-btn');
   const pointerBtn = document.getElementById('pointer-btn');
@@ -103,15 +126,44 @@ document.addEventListener('DOMContentLoaded', () => {
     if (stickerCountEl) stickerCountEl.textContent = stickerCount;
   }
 
-  function spawnSticker(emoji, xPercent, yPercent) {
+  function saveStickersToStorage() {
     if (!stickerLayer) return;
+    const stickers = [];
+    stickerLayer.querySelectorAll('.placed-sticker').forEach(el => {
+      stickers.push({
+        emoji: el.dataset.emoji,
+        x: el.style.left,
+        y: el.style.top,
+        rot: el.dataset.rot
+      });
+    });
+    localStorage.setItem('cork_stickers', JSON.stringify(stickers));
+  }
 
-    const randomRot = (Math.random() * 32 - 16).toFixed(1);
+  function loadStickersFromStorage() {
+    if (!stickerLayer) return;
+    const saved = localStorage.getItem('cork_stickers');
+    if (!saved) return;
+    try {
+      const stickers = JSON.parse(saved);
+      stickers.forEach(s => {
+        createStickerElement(s.emoji, s.x, s.y, s.rot, false);
+      });
+    } catch (e) {
+      console.error('Ошибка загрузки стикеров', e);
+    }
+  }
+
+  function createStickerElement(emoji, xPercent, yPercent, rot, save = true) {
     const stickerEl = document.createElement('div');
     stickerEl.className = 'placed-sticker text-3xl sm:text-4xl sticker-pop';
     stickerEl.textContent = emoji;
-    stickerEl.style.left = `${xPercent}%`;
-    stickerEl.style.top = `${yPercent}%`;
+    stickerEl.dataset.emoji = emoji;
+    stickerEl.style.left = xPercent;
+    stickerEl.style.top = yPercent;
+    
+    const randomRot = rot || (Math.random() * 32 - 16).toFixed(1);
+    stickerEl.dataset.rot = randomRot;
     stickerEl.style.transform = `translate(-50%, -50%) rotate(${randomRot}deg)`;
     stickerEl.title = 'Кликни, чтобы отлепить';
 
@@ -121,34 +173,27 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         stickerEl.remove();
         updateCount(-1);
+        saveStickersToStorage();
       }, 160);
     });
 
     stickerLayer.appendChild(stickerEl);
     updateCount(1);
+    if (save) saveStickersToStorage();
   }
+
+  loadStickersFromStorage();
 
   function setMode(sticker) {
     currentSticker = sticker;
-
-    stickerBtns.forEach(b => {
-      b.classList.remove('ring-2', 'ring-amber-500', 'bg-amber-100');
-    });
-
+    stickerBtns.forEach(b => b.classList.remove('ring-2', 'ring-amber-500', 'bg-amber-100'));
     if (sticker) {
-      // При выборе стикера закрываем открытые карточки
-      closeAllCards();
-
       const activeBtn = document.querySelector(`.sticker-btn[data-sticker="${sticker}"]`);
-      if (activeBtn) {
-        activeBtn.classList.add('ring-2', 'ring-amber-500', 'bg-amber-100');
-      }
-
+      if (activeBtn) activeBtn.classList.add('ring-2', 'ring-amber-500', 'bg-amber-100');
       if (pointerBtn) {
         pointerBtn.classList.remove('bg-amber-500', 'text-white');
         pointerBtn.classList.add('bg-white', 'text-stone-700');
       }
-
       if (ghostSticker) ghostSticker.textContent = sticker;
       if (corkBoard) corkBoard.style.cursor = 'crosshair';
     } else {
@@ -161,57 +206,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ================= ОТКРЫТИЕ КАРТОЧЕК ПО ТАПУ / КЛИКУ =================
-  const boardCards = document.querySelectorAll('.board-card');
-  const cardsGrid = document.getElementById('cards-grid') || document.querySelector('.cards-grid');
-
-  function closeAllCards() {
-    boardCards.forEach(c => c.classList.remove('is-open'));
-    if (cardsGrid) cardsGrid.classList.remove('has-open-card');
-  }
-
-  boardCards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      // Если выбран режим стикеров — не трогаем карточки
-      if (currentSticker) return;
-
-      // Если кликнули по интерактивной ссылке/кнопке внутри карточки — даём сработать ссылке
-      if (e.target.closest('a, button')) return;
-
-      const isCurrentlyOpen = card.classList.contains('is-open');
-
-      // Закрываем все остальные открытые карточки
-      boardCards.forEach(c => {
-        if (c !== card) c.classList.remove('is-open');
-      });
-
-      // Переключаем текущую
-      if (isCurrentlyOpen) {
-        card.classList.remove('is-open');
-        if (cardsGrid) cardsGrid.classList.remove('has-open-card');
-      } else {
-        card.classList.add('is-open');
-        if (cardsGrid) cardsGrid.classList.add('has-open-card');
-      }
-    });
-  });
-
-  // Закрытие карточки при клике в любое свободное место доски/страницы
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.board-card, .sticker-btn, #pointer-btn, #clear-stickers-btn, #garland-toggle, #copy-email-btn')) {
-      closeAllCards();
-    }
-  });
-
   stickerBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const sticker = btn.getAttribute('data-sticker');
-      if (currentSticker === sticker) {
-        setMode(null);
-      } else {
-        setMode(sticker);
-      }
+      setMode(currentSticker === sticker ? null : sticker);
     });
   });
 
@@ -223,10 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      setMode(null);
-      closeAllCards();
-    }
+    if (e.key === 'Escape') setMode(null);
   });
 
   if (corkBoard) {
@@ -247,15 +243,13 @@ document.addEventListener('DOMContentLoaded', () => {
     corkBoard.addEventListener('click', (e) => {
       if (!currentSticker) return;
       if (e.target.classList.contains('placed-sticker')) return;
-
-      // Запрещаем клеить стикеры на карточки, выезжающие бумажки, бейджи в шапке и футер
       if (e.target.closest('.board-card, .hover-note, .paper-badge, footer')) return;
 
       const rect = corkBoard.getBoundingClientRect();
-      const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
-      const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
+      const xPercent = (((e.clientX - rect.left) / rect.width) * 100).toFixed(1) + '%';
+      const yPercent = (((e.clientY - rect.top) / rect.height) * 100).toFixed(1) + '%';
 
-      spawnSticker(currentSticker, xPercent.toFixed(1), yPercent.toFixed(1));
+      createStickerElement(currentSticker, xPercent, yPercent, null, true);
     });
   }
 
@@ -268,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => s.remove(), 160);
       });
       updateCount(-stickerCount);
+      localStorage.removeItem('cork_stickers');
     });
   }
 });
