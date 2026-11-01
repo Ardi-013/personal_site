@@ -28,7 +28,6 @@ body {
   z-index: 65;
 }
 
-/* ================= ГИРЛЯНДА ================= */
 .garland-container {
   position: absolute;
   top: 0;
@@ -102,6 +101,7 @@ body {
   border-color: #fbbf24;
   animation: bulbGlow 3s ease-in-out infinite;
 }
+
 .garland-on .garland-bulb::after {
   border-color: #fffbeb;
 }
@@ -118,10 +118,10 @@ body {
 .cork-frame:not(.garland-on) .bulb-rays { opacity: 0; }
 .garland-on .drawn-bulb { filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.75)); }
 
-/* ================= КАРТОЧКИ ================= */
 header {
   pointer-events: none;
 }
+
 header .paper-badge {
   pointer-events: auto;
 }
@@ -130,6 +130,7 @@ header .paper-badge {
   position: relative;
   transition: transform 0.2s ease;
 }
+
 .paper-badge:hover {
   transform: scale(1.03) rotate(0deg) !important;
   z-index: 25 !important;
@@ -139,6 +140,7 @@ header .paper-badge {
   pointer-events: none;
   transition: z-index 0.1s ease;
 }
+
 #cards-container:has(.is-open),
 #cards-container:has(.board-card:hover),
 #cards-container.has-open-card {
@@ -164,7 +166,6 @@ header .paper-badge {
   transition: box-shadow 0.25s ease;
 }
 
-/* На ПК: hover срабатывает только когда нет зафиксированной карточки */
 @media (min-width: 1024px) {
   #cards-container:not(.has-open-card):not(:has(.is-open)) .board-card:hover:not(.force-closed),
   .board-card.is-open:not(.force-closed) {
@@ -183,7 +184,6 @@ header .paper-badge {
     pointer-events: auto;
   }
 
-  /* Блокировка соседних карточек при фиксации одной */
   #cards-container.has-open-card .board-card:not(.is-open) .hover-note,
   #cards-container:has(.is-open) .board-card:not(.is-open) .hover-note {
     opacity: 0 !important;
@@ -192,7 +192,6 @@ header .paper-badge {
   }
 }
 
-/* Базовый стиль бумажек */
 .hover-note {
   position: absolute;
   width: 290px;
@@ -208,7 +207,6 @@ header .paper-badge {
   z-index: 10;
 }
 
-/* ================= СВЕТЛЫЙ БУМАЖНЫЙ ПЛЕЕР ================= */
 .music-paper-widget {
   width: 260px;
   padding: 12px 14px;
@@ -216,14 +214,15 @@ header .paper-badge {
   background-size: 14px 14px;
 }
 
-/* Строки плейлиста */
 .playlist-track {
   color: #57534e;
   border: 1px solid transparent;
 }
+
 .playlist-track:hover {
   background-color: #f3e8ff;
 }
+
 .playlist-track.is-active {
   background-color: #f3e8ff;
   border-color: #d8b4fe;
@@ -231,7 +230,6 @@ header .paper-badge {
   font-weight: 600;
 }
 
-/* Рамка полароида */
 .polaroid {
   background: #fffefb;
   padding: 10px 10px 28px 10px;
@@ -259,47 +257,20 @@ header .paper-badge {
   object-fit: cover;
 }
 
-/* ================= ПОЗИЦИИ НА ПК ================= */
-/* Розовая карточка: записка сдвинута левее и выше, полароид с манекеном — правее */
-.note-2-l { 
-  top: -25px; 
-  right: calc(100% + 24px); 
-  transform: translateX(35px) rotate(-4deg) scale(0.85); 
-}
-.board-card:hover:not(.force-closed) .note-2-l, 
-.board-card.is-open:not(.force-closed) .note-2-l { 
-  transform: translateX(0) rotate(-3deg) scale(1); 
-}
+.note-1-b { top: calc(100% - 14px); left: -20px; transform: translateY(-35px) rotate(-3deg) scale(0.85); }
+.board-card:hover:not(.force-closed) .note-1-b, .board-card.is-open:not(.force-closed) .note-1-b { transform: translateY(0) rotate(-2deg) scale(1); }
 
-.polaroid-2-r { 
-  top: 10px; 
-  left: calc(100% + 5px); 
-  transform: translateX(-35px) rotate(4deg) scale(0.85); 
-}
-.board-card:hover:not(.force-closed) .polaroid-2-r, 
-.board-card.is-open:not(.force-closed) .polaroid-2-r { 
-  transform: translateX(0) rotate(3deg) scale(1); 
-}
+.note-2-l { top: -25px; right: calc(100% + 24px); transform: translateX(35px) rotate(-4deg) scale(0.85); }
+.board-card:hover:not(.force-closed) .note-2-l, .board-card.is-open:not(.force-closed) .note-2-l { transform: translateX(0) rotate(-3deg) scale(1); }
 
-.polaroid-2-b1 { 
-  top: calc(100% + 12px); 
-  left: -15px; 
-  transform: translateY(-35px) rotate(-5deg) scale(0.85); 
-}
-.board-card:hover:not(.force-closed) .polaroid-2-b1, 
-.board-card.is-open:not(.force-closed) .polaroid-2-b1 { 
-  transform: translateY(0) rotate(-4deg) scale(1); 
-}
+.polaroid-2-r { top: 10px; left: calc(100% + 5px); transform: translateX(-35px) rotate(4deg) scale(0.85); }
+.board-card:hover:not(.force-closed) .polaroid-2-r, .board-card.is-open:not(.force-closed) .polaroid-2-r { transform: translateX(0) rotate(3deg) scale(1); }
 
-.polaroid-2-b2 { 
-  top: calc(100% + 22px); 
-  left: 185px; 
-  transform: translateY(-35px) rotate(6deg) scale(0.85); 
-}
-.board-card:hover:not(.force-closed) .polaroid-2-b2, 
-.board-card.is-open:not(.force-closed) .polaroid-2-b2 { 
-  transform: translateY(0) rotate(5deg) scale(1); 
-}
+.polaroid-2-b1 { top: calc(100% + 12px); left: -15px; transform: translateY(-35px) rotate(-5deg) scale(0.85); }
+.board-card:hover:not(.force-closed) .polaroid-2-b1, .board-card.is-open:not(.force-closed) .polaroid-2-b1 { transform: translateY(0) rotate(-4deg) scale(1); }
+
+.polaroid-2-b2 { top: calc(100% + 22px); left: 185px; transform: translateY(-35px) rotate(6deg) scale(0.85); }
+.board-card:hover:not(.force-closed) .polaroid-2-b2, .board-card.is-open:not(.force-closed) .polaroid-2-b2 { transform: translateY(0) rotate(5deg) scale(1); }
 
 .polaroid-3-1 { top: -95px; right: calc(100% + 12px); transform: translateX(35px) rotate(-7deg) scale(0.85); }
 .board-card:hover:not(.force-closed) .polaroid-3-1, .board-card.is-open:not(.force-closed) .polaroid-3-1 { transform: translateX(0) rotate(-7deg) scale(1); }
@@ -310,19 +281,8 @@ header .paper-badge {
 .polaroid-3-3 { top: calc(100% + 20px); left: 35px; transform: translateY(-35px) rotate(-2deg) scale(0.85); }
 .board-card:hover:not(.force-closed) .polaroid-3-3, .board-card.is-open:not(.force-closed) .polaroid-3-3 { transform: translateY(0) rotate(-2deg) scale(1); }
 
-.note-1-b { top: calc(100% - 14px); left: -20px; transform: translateY(-35px) rotate(-3deg) scale(0.85); }
-.board-card:hover:not(.force-closed) .note-1-b, .board-card.is-open:not(.force-closed) .note-1-b { transform: translateY(0) rotate(-2deg) scale(1); }
-
-/* Синяя карточка: полароид с драконом выдвинут левее */
-.polaroid-4-l { 
-  top: 5px; 
-  right: calc(100% + 18px); 
-  transform: translateX(35px) rotate(-5deg) scale(0.85); 
-}
-.board-card:hover:not(.force-closed) .polaroid-4-l, 
-.board-card.is-open:not(.force-closed) .polaroid-4-l { 
-  transform: translateX(0) rotate(-4deg) scale(1); 
-}
+.polaroid-4-l { top: 5px; right: calc(100% + 18px); transform: translateX(35px) rotate(-5deg) scale(0.85); }
+.board-card:hover:not(.force-closed) .polaroid-4-l, .board-card.is-open:not(.force-closed) .polaroid-4-l { transform: translateX(0) rotate(-4deg) scale(1); }
 
 .note-4-t { bottom: calc(100% - 14px); left: 15px; transform: translateY(35px) rotate(3.5deg) scale(0.85); }
 .board-card:hover:not(.force-closed) .note-4-t, .board-card.is-open:not(.force-closed) .note-4-t { transform: translateY(0) rotate(2.5deg) scale(1); }
@@ -330,18 +290,9 @@ header .paper-badge {
 .note-5-t { bottom: calc(100% - 14px); left: 15px; transform: translateY(35px) rotate(-3.5deg) scale(0.85); }
 .board-card:hover:not(.force-closed) .note-5-t, .board-card.is-open:not(.force-closed) .note-5-t { transform: translateY(0) rotate(-2deg) scale(1); }
 
-/* Плеер на ПК */
-.note-5-r { 
-  top: 0px; 
-  left: calc(100% - 6px); 
-  transform: translateX(-35px) rotate(3deg) scale(0.85); 
-}
-.board-card:hover:not(.force-closed) .note-5-r, 
-.board-card.is-open:not(.force-closed) .note-5-r { 
-  transform: translateX(0) rotate(2deg) scale(1); 
-}
+.note-5-r { top: 0px; left: calc(100% - 6px); transform: translateX(-35px) rotate(3deg) scale(0.85); }
+.board-card:hover:not(.force-closed) .note-5-r, .board-card.is-open:not(.force-closed) .note-5-r { transform: translateX(0) rotate(2deg) scale(1); }
 
-/* ================= МОБИЛЬНАЯ АДАПТАЦИЯ ================= */
 @media (max-width: 1023px) {
   .hover-note {
     width: 265px !important;
@@ -359,9 +310,11 @@ header .paper-badge {
     transform: scale(1.02) rotate(0deg) !important;
     z-index: 45 !important;
   }
+
   .board-card.is-open .card-surface {
     box-shadow: 0 22px 38px -8px rgba(0, 0, 0, 0.45) !important;
   }
+
   .board-card.is-open .hover-note {
     opacity: 1 !important;
     pointer-events: auto !important;
@@ -372,6 +325,7 @@ header .paper-badge {
     bottom: calc(100% - 12px) !important;
     transform: translate(-50%, 25px) rotate(-2.5deg) scale(0.9) !important;
   }
+
   .board-card.is-open .note-m-top {
     transform: translate(-50%, 0) rotate(-2deg) scale(1) !important;
   }
@@ -381,25 +335,26 @@ header .paper-badge {
     top: calc(100% - 12px) !important;
     transform: translate(-50%, -25px) rotate(2.5deg) scale(0.9) !important;
   }
+
   .board-card.is-open .note-m-bottom {
     transform: translate(-50%, 0) rotate(2deg) scale(1) !important;
   }
 
-  /* Компактный плеер на мобилках */
   .music-paper-widget {
     width: 270px !important;
     padding: 10px 12px !important;
   }
+
   .music-paper-widget .playlist-track {
     padding-top: 2px !important;
     padding-bottom: 2px !important;
     font-size: 10.5px !important;
   }
 
-  /* Отодвигаем футер вниз при открытии последней карточки на телефоне */
   .board-card:last-child {
     transition: margin-bottom 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
+
   .board-card:last-child.is-open {
     margin-bottom: 255px !important;
   }
@@ -409,11 +364,11 @@ header .paper-badge {
     min-height: 180px !important;
     padding: 7px 7px 20px 7px !important;
   }
+
   .polaroid .polaroid-photo {
     height: 130px !important;
   }
 
-  /* --- РОЗОВАЯ КАРТОЧКА --- */
   .polaroid-m-sub1 {
     top: calc(100% - 10px) !important;
     bottom: auto !important;
@@ -421,6 +376,7 @@ header .paper-badge {
     z-index: 12 !important;
     transform: translate(-50%, -20px) rotate(-3.5deg) scale(0.9) !important;
   }
+
   .polaroid-m-sub2 {
     top: calc(100% - 10px) !important;
     bottom: auto !important;
@@ -428,6 +384,7 @@ header .paper-badge {
     z-index: 12 !important;
     transform: translate(-50%, -20px) rotate(3.5deg) scale(0.9) !important;
   }
+
   .polaroid-m-sub3 {
     top: calc(100% + 155px) !important;
     bottom: auto !important;
@@ -435,11 +392,11 @@ header .paper-badge {
     z-index: 13 !important;
     transform: translate(-50%, -20px) rotate(-1.5deg) scale(0.9) !important;
   }
+
   .board-card.is-open .polaroid-m-sub1 { transform: translate(-50%, 0) rotate(-3.5deg) scale(1) !important; }
   .board-card.is-open .polaroid-m-sub2 { transform: translate(-50%, 0) rotate(3.5deg) scale(1) !important; }
   .board-card.is-open .polaroid-m-sub3 { transform: translate(-50%, 0) rotate(-1.5deg) scale(1) !important; }
 
-  /* --- ЗЕЛЁНАЯ КАРТОЧКА --- */
   .polaroid-3-1 {
     bottom: calc(100% - 15px) !important;
     top: auto !important;
@@ -447,6 +404,7 @@ header .paper-badge {
     z-index: 12 !important;
     transform: translate(-50%, 25px) rotate(-3deg) scale(0.9) !important;
   }
+
   .polaroid-3-2 {
     top: calc(100% - 10px) !important;
     bottom: auto !important;
@@ -454,6 +412,7 @@ header .paper-badge {
     z-index: 12 !important;
     transform: translate(-50%, -20px) rotate(-3.5deg) scale(0.9) !important;
   }
+
   .polaroid-3-3 {
     top: calc(100% - 10px) !important;
     bottom: auto !important;
@@ -461,12 +420,12 @@ header .paper-badge {
     z-index: 12 !important;
     transform: translate(-50%, -20px) rotate(3.5deg) scale(0.9) !important;
   }
+
   .board-card.is-open .polaroid-3-1 { transform: translate(-50%, 0) rotate(-3deg) scale(1) !important; }
   .board-card.is-open .polaroid-3-2 { transform: translate(-50%, 0) rotate(-3.5deg) scale(1) !important; }
   .board-card.is-open .polaroid-3-3 { transform: translate(-50%, 0) rotate(3.5deg) scale(1) !important; }
 }
 
-/* ================= БУЛАВКИ, СКОТЧ И СТИКЕРЫ ================= */
 .pushpin {
   position: absolute;
   top: -10px;
@@ -478,6 +437,7 @@ header .paper-badge {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.7);
   z-index: 25;
 }
+
 .pushpin::after {
   content: '';
   position: absolute;
@@ -488,6 +448,7 @@ header .paper-badge {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.85);
 }
+
 .pin-red { background: radial-gradient(circle at 35% 35%, #ef4444, #991b1b); }
 .pin-blue { background: radial-gradient(circle at 35% 35%, #3b82f6, #1d4ed8); }
 .pin-gold { background: radial-gradient(circle at 35% 35%, #eab308, #854d0e); }
@@ -507,6 +468,7 @@ header .paper-badge {
   border-right: 2px dashed rgba(200, 180, 140, 0.5);
   z-index: 25;
 }
+
 .washi-tape-cyan { background: rgba(207, 250, 254, 0.82); }
 
 .paper-tag {
@@ -533,6 +495,7 @@ header .paper-badge {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
+
 .placed-sticker:hover { transform: translate(-50%, -50%) scale(1.35) !important; }
 .placed-sticker.removing { transform: translate(-50%, -50%) scale(0) !important; opacity: 0; }
 
@@ -541,4 +504,5 @@ header .paper-badge {
   60% { transform: translate(-50%, -50%) scale(1.25) rotate(12deg); opacity: 1; }
   100% { transform: translate(-50%, -50%) scale(1); }
 }
+
 .sticker-pop { animation: stickerPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }

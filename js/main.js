@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
   const corkBoard = document.getElementById('cork-board');
   const cardsContainer = document.getElementById('cards-container');
 
@@ -14,16 +13,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const shades = ['#7c461d', '#572e10', '#d89f66', '#9c6434', '#e2b582', '#45220c'];
     for (let i = 0; i < 4500; i++) {
-      const x = Math.random() * 320, y = Math.random() * 320, r = Math.random() * 2 + 0.3;
+      const x = Math.random() * 320;
+      const y = Math.random() * 320;
+      const r = Math.random() * 2 + 0.3;
       ctx.fillStyle = shades[Math.floor(Math.random() * shades.length)];
       ctx.globalAlpha = Math.random() * 0.45 + 0.1;
-      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
     }
+
     for (let i = 0; i < 80; i++) {
-      const x = Math.random() * 320, y = Math.random() * 320, w = Math.random() * 14 + 4, h = Math.random() * 6 + 2;
+      const x = Math.random() * 320;
+      const y = Math.random() * 320;
+      const w = Math.random() * 14 + 4;
+      const h = Math.random() * 6 + 2;
       ctx.fillStyle = Math.random() > 0.4 ? '#4a250a' : '#f0c896';
       ctx.globalAlpha = Math.random() * 0.35 + 0.15;
-      ctx.beginPath(); ctx.ellipse(x, y, w, h, Math.random() * Math.PI, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(x, y, w, h, Math.random() * Math.PI, 0, Math.PI * 2);
+      ctx.fill();
     }
 
     const patternUrl = canvas.toDataURL();
@@ -34,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderCorkTexture();
 
-  // Выключатель гирлянды
   const garlandToggle = document.getElementById('garland-toggle');
   if (garlandToggle && corkBoard) {
     garlandToggle.addEventListener('click', (e) => {
@@ -43,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Копирование почты
   const copyEmailBtn = document.getElementById('copy-email-btn');
   const emailIcon = document.getElementById('email-icon');
   const emailText = document.getElementById('email-text');
@@ -67,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ================= МУЗЫКАЛЬНЫЙ ПЛЕЕР-ВИДЖЕТ =================
   const trackBtns = Array.from(document.querySelectorAll('.playlist-track'));
   const playerTitle = document.getElementById('player-title');
   const playerArtist = document.getElementById('player-artist');
@@ -85,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setPlayingState(playing) {
     isPlaying = playing;
-    if (playerToggle) playerToggle.textContent = isPlaying ? '⏸' : '▶';
+    if (playerToggle) playerToggle.textContent = isPlaying ? '⏸\uFE0E' : '▶\uFE0E';
     if (playerStatusText) playerStatusText.textContent = isPlaying ? 'сейчас играет...' : 'на паузе';
   }
 
@@ -142,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ================= ОТКРЫТИЕ И ЗАКРЫТИЕ КАРТОЧЕК =================
   const boardCards = document.querySelectorAll('.board-card');
 
   function updateContainerZIndex() {
@@ -165,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!wasOpen) {
         card.classList.add('is-open');
-
         if (window.innerWidth < 1024 && idx === boardCards.length - 1) {
           setTimeout(() => {
             card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -190,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ================= ЛОГИКА СТИКЕРОВ И LOCALSTORAGE =================
   const stickerLayer = document.getElementById('sticker-layer');
   const stickerBtns = document.querySelectorAll('.sticker-btn');
   const pointerBtn = document.getElementById('pointer-btn');
@@ -230,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createStickerElement(s.emoji, s.x, s.y, s.rot, false);
       });
     } catch (e) {
-      console.error('Ошибка загрузки стикеров', e);
+      console.error(e);
     }
   }
 
